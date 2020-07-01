@@ -1,0 +1,21 @@
+// font
+@import url("https://fonts.googleapis.com/css2?family=Cairo&display=swap");
+
+// global settings
+
+@import "./base/settings";
+@import "./base/base";
+@import "./utils/mixins";
+@import "~bootstrap/scss/bootstrap";
+
+// pages & components
+
+@import "./pages/home";
+@import "./pages/addAccount";
+@import "./pages/subscription";
+@import "./pages/blog";
+@import "./components/newsCard";
+@import "./components/premiumCard";
+@import "./components/personsFilter";
+@import "./components/latestGhost";
+@import "./components/counter";

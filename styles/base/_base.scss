@@ -1,0 +1,26 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  direction: rtl;
+
+  a {
+    text-decoration: none !important;
+    color: #000;
+  }
+}
+*::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+*::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgb(55, 129, 129);
+
+  border-radius: 10px;
+}

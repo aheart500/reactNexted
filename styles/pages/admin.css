@@ -1,0 +1,519 @@
+.admin-nav-container {
+  position: fixed;
+  right: 0;
+  height: 100%;
+  padding: 1rem;
+  width: 15rem;
+  text-align: right;
+  background-image: linear-gradient(45deg, #3d4c96, #6a85ff);
+  color: #fff;
+}
+.admin-nav-container .nav-header {
+  font-size: 1.5rem;
+  padding: 0 1rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.admin-nav-container .nav-header .grinwink {
+  margin-left: 0.5rem;
+  font-size: 2rem;
+  transform: rotate(340deg);
+}
+.admin-nav-container hr {
+  background-color: white;
+}
+.admin-nav-container .nav-main {
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+.admin-nav-container .icon {
+  margin-left: 0.5rem;
+}
+.admin-nav-container ul {
+  list-style-type: none;
+  padding: 0;
+  color: lightgrey;
+  height: 70vh;
+  overflow-y: auto;
+}
+.admin-nav-container ul li {
+  height: 3rem;
+  line-height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  cursor: pointer;
+}
+.admin-nav-container ul li:hover {
+  transform: scale(0.98);
+}
+.admin-nav-container .arrow {
+  margin-right: auto;
+}
+.taps-header {
+  width: 100%;
+  height: 4rem;
+  background-color: #fff;
+  box-shadow: -5px -7px 20px 0px black;
+}
+.tap {
+  margin-right: 15rem;
+  padding: 1rem;
+  text-align: right;
+}
+@media (max-width: 600px) {
+  .tap {
+    margin-right: 0;
+  }
+  .span-link {
+    display: block;
+  }
+  .tap-forms .addMany-form {
+    flex-direction: column;
+  }
+  .addMany-form select,
+  .addMany-form button {
+    margin: 0.5rem 0;
+  }
+}
+
+.tap-box {
+  box-shadow: 0px 0px 11px 0px #8a8a8a;
+  border-radius: 10px;
+}
+.tap-forms {
+  margin: 1rem 0;
+  padding: 1rem 1rem 0 1rem;
+  background-color: #efefef;
+  border-radius: 10px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.tap-forms label {
+  display: block;
+  font-size: 1.2rem;
+}
+.tap-forms input {
+  margin: 0 0 0 1rem;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  height: 2.5rem;
+  width: 20rem;
+  font-size: 1.1rem;
+  outline: 0;
+}
+.tap-box button {
+  border-radius: 5px;
+  padding: 2px 5px;
+  outline: none;
+  font-size: 1.2rem;
+}
+.tap-table {
+  margin: 1rem;
+  border-radius: 10px;
+  padding: 1rem 0.5rem;
+}
+.tap-table table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 1.4rem;
+}
+.tap-table th {
+  font-size: 1.5rem;
+}
+.tap-table td,
+.tap-table th {
+  border: 1px solid #dddddd;
+  padding: 8px;
+}
+.tap-table button {
+  padding: 5px 10px;
+  margin-left: 1rem;
+  color: #fff;
+}
+.edit {
+  background-color: #17a2b8 !important;
+  border: 1px solid #1ecbe6 !important;
+}
+.delete {
+  background-color: #dc3545 !important;
+  border: 1px solid red !important;
+}
+.tap-box select {
+  width: 10rem;
+  height: 2.5rem;
+  margin-left: 1rem;
+}
+.tap-forms .addMany-form {
+  display: flex;
+  align-items: center;
+}
+.tap-forms textarea {
+  resize: none;
+  height: 15rem;
+  width: 20rem;
+  border: 1px solid lightgray;
+  margin-left: 1rem;
+}
+.tap-forms textarea:focus {
+  outline: none;
+}
+.tag {
+  padding: 5px;
+  font-size: 1.2rem;
+  color: #fff;
+  border-radius: 5px;
+  font-weight: bold;
+  font-style: italic;
+}
+.tag-male {
+  background-color: gray;
+}
+.tag-female {
+  background-color: #ffc107;
+  color: black;
+}
+.tag-vip {
+  background-color: #007bff;
+}
+.tag-normal {
+  background-color: #17a2b8;
+}
+.tag-blocked {
+  background-color: red;
+}
+.tag-good {
+  background-color: #28a745;
+}
+.tap-box .span-link {
+  color: #17a2b8;
+  background-color: #dddddd;
+  padding: 10px 15px;
+  border-radius: 10px;
+  margin: 1rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.tap-box .span-link:hover {
+  background-color: aliceblue;
+}
+.create-user-form form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.tap-forms .radio-box {
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+}
+.tap-forms input[type="radio"] {
+  width: initial;
+  padding: 0;
+  margin: 0 0.5rem;
+  cursor: pointer;
+}
+.tap-forms .special-label {
+  display: inline;
+  cursor: pointer;
+}
+.create-user-form button {
+  background-color: khaki;
+  padding: 5px 1rem;
+  margin: 1rem 4rem;
+}
+input[type="file"] {
+  display: none;
+}
+.img-label {
+  width: 10rem;
+  background-color: gray;
+  border-radius: 5px;
+  height: 10rem;
+  cursor: pointer;
+  position: relative;
+}
+.img-wide {
+  width: 90%;
+  height: 20rem;
+
+  margin: auto;
+}
+.create-user-form .img-label:hover::after {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  content: "اضغط للإضافة";
+}
+.create-user-form button:hover {
+  background-color: rgb(219, 209, 118);
+}
+.create-user-form .message {
+  color: red;
+}
+.tap .admin-cards-container {
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+  justify-content: space-around;
+  margin: 1rem;
+}
+.tap .admin-cards-container .card {
+  width: 23%;
+  padding: 1rem;
+  box-shadow: 1px 1px 8px 1px grey;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+}
+@media (max-width: 900px) {
+  .tap .admin-cards-container {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .tap .admin-cards-container .card {
+    width: 17rem;
+    margin: 1rem;
+  }
+  .tap-forms input {
+    width: 90%;
+  }
+}
+@media (max-width: 370px) {
+  .tap .admin-cards-container .card {
+    width: 10rem;
+  }
+}
+.tap .admin-icon {
+  font-size: 1.5rem;
+  color: #8a8a8a;
+}
+.admin-tap .tap-table {
+  background-color: #fff;
+  box-shadow: 1px 1px 8px 1px gray;
+  padding: 0;
+  margin: 2rem 0;
+}
+.admin-tap .tap-table h1 {
+  background-color: #dddddd;
+  margin: 0;
+  padding: 0.5rem 1rem;
+}
+.admin-tap .admin-tables {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+
+@media (max-width: 900px) {
+  .admin-tap .admin-tables .first-table {
+    width: 100%;
+    overflow-x: auto;
+  }
+  .admin-tap .admin-tables .second-table {
+    width: 100%;
+    overflow-x: auto;
+  }
+  .tap-box {
+    overflow: hidden;
+  }
+  .tap-forms {
+    margin: 0;
+  }
+  hr {
+    margin: 0;
+  }
+}
+
+.message-td {
+  width: 70%;
+}
+
+.tap-forms .message-div {
+  display: flex;
+
+  align-items: center;
+}
+.img-absolute {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  height: 90%;
+  z-index: -1;
+}
+.user-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 40rem;
+  font-size: 1.1rem;
+  font-weight: 800;
+  padding: 2rem 0;
+  background: url("/assets/images/home/logotype.svg") no-repeat center/contain;
+  position: relative;
+  color: black;
+  transition: all 0.5s ease;
+  animation: show-up 0.7s ease;
+}
+@keyframes show-up {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.user-form input[type="radio"] {
+  margin: 0.5rem;
+}
+.user-form label {
+  margin-left: 11rem;
+  transition: all 0.5s ease;
+}
+.user-form .username-label {
+  margin-left: 7rem;
+  transition: all 0.5s ease;
+}
+
+.user-form input[type="text"],
+.user-form input[type="number"] {
+  height: 2.2rem;
+  width: 15rem;
+  outline: none;
+  border: 1px solid lightgray;
+  transition: all 0.5s ease;
+}
+.user-form select {
+  width: 15rem;
+  height: 2.2rem;
+  outline: none;
+  background-color: white;
+  border: 1px solid lightgray;
+  transition: all 0.5s ease;
+}
+.special-button {
+  color: white;
+  background-color: black;
+  border: 1px solid black;
+  border-radius: 5px;
+  font-size: 2rem;
+  font-weight: 900;
+  width: 15rem;
+  box-shadow: 3px 0px 10px 2px #777777;
+  font-family: "Tajawal", sans-serif;
+  margin: 4rem 0;
+}
+.app-container.dark .special-button {
+  color: black;
+  background-color: white;
+  border: 1px solid white;
+}
+.required-message {
+  color: #dc3545;
+  font-weight: 500;
+  font-size: 1rem;
+}
+@media (max-width: 576px) {
+  .user-form input[type="text"],
+  .user-form input[type="number"] {
+    height: 1.5rem;
+    width: 10rem;
+  }
+  .user-form select {
+    width: 10rem;
+    height: 1.5rem;
+  }
+  .user-form label {
+    margin-left: 7rem;
+  }
+  .user-form .username-label {
+    margin-left: 4rem;
+  }
+}
+@media (max-width: 412px) {
+  .special-button {
+    margin-top: 1rem !important;
+  }
+  .user-form {
+    background-size: 32rem;
+    height: unset;
+  }
+}
+.admin-nav-container .small-li {
+  height: 2rem;
+  padding: 0 1rem;
+}
+.tap .blogs-container {
+  margin: 1rem 0;
+}
+.tap .blog {
+  margin: 1rem;
+  padding: 0.5rem;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+.tap .blog-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.tap .blog-header span {
+  margin: 0 0 0 0.5rem;
+}
+.tap .blog-header-left {
+  width: 20%;
+}
+.tap .blog-header-left button {
+  color: #fff;
+  padding: 5px 10px;
+  margin-left: 0.5rem;
+}
+.tap .blog hr {
+  color: #000;
+}
+
+.admin {
+  color: black;
+  background-color: white;
+}
+.premium-container {
+  align-items: flex-end;
+}
+.premium-card .item .image-container,
+.premium-card .item .image-container img {
+  max-height: 15rem;
+}
+.report-table {
+  border: 1px solid;
+  padding: 1rem;
+  border-radius: 5px;
+}
+.ad-box {
+  padding: 1rem;
+  border: 1px solid black;
+  border-radius: 10px;
+  margin: 0.5rem;
+}
+.ad-controls {
+  background-color: lightgray;
+  padding: 1rem;
+  margin: 1rem;
+}
+.ad-controls select {
+  margin: 0 1rem;
+}
+.htmlEmbed {
+  direction: ltr;
+}

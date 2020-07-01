@@ -1,23 +1,24 @@
 import React, { useState, useEffect, useContext } from "react";
-import ThemeContext from "../ThemeContext";
+import ThemeContext from "../../ThemeContext";
 import {
   getVipUsers,
   getNormalUsers,
   getSearchUsers,
   getAds,
   getSingleUser,
-} from "../services/UserServices";
-import tagsModel from "../server/models/tag";
-import userModel from "../server/models/user";
-import settingsModel from "../server/models/settings";
-import Footer from "../components/Footer";
+} from "../../services/UserServices";
+import ThemeButton from "../../components/ThemeButton";
+import Footer from "../../components/Footer";
+
 import { Container, Row, Col } from "react-bootstrap";
-import ThemeButton from "../components/ThemeButton";
-import PremiumCard from "../components/PremiumCard";
-import PersonsFilter from "../components/PersonsFilter";
-import LatestGhost from "../components/LatestGhost";
-import AD from "../components/Ad";
 import Link from "next/link";
+import PremiumCard from "../../components/PremiumCard";
+import PersonsFilter from "../../components/PersonsFilter";
+import LatestGhost from "../../components/LatestGhost";
+import AD from "../../components/Ad";
+import tagsModel from "../../server/models/tag";
+import userModel from "../../server/models/user";
+import settingsModel from "../../server/models/settings";
 
 function Home({ user, settings, queryParams }) {
   const [normalUsers, setNormalUsers] = useState([]);
@@ -27,7 +28,6 @@ function Home({ user, settings, queryParams }) {
   const [nSearch, setnSearch] = useState(0);
   const [page, setPage] = useState(1);
   const { theme, changeTheme } = useContext(ThemeContext);
-
   useEffect(() => {
     getVipUsers(1, settings.vip_per_page)
       .then((res) => setVipUsers(res))
@@ -255,6 +255,7 @@ function Home({ user, settings, queryParams }) {
     </div>
   );
 }
+
 export async function getServerSideProps(context) {
   let settings = await settingsModel.findOne({}).lean();
   let link = await tagsModel.findOne({}).select({ link: 1 }).lean();
@@ -283,5 +284,4 @@ export async function getServerSideProps(context) {
     },
   };
 }
-
 export default Home;

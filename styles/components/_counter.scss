@@ -1,0 +1,14 @@
+.counter {
+    position: relative;
+    bottom: 10px;
+    a {
+        display: inline-block;
+        padding: 3px 8px;
+        background-color: #F5F1F4;
+        border: 1px solid $borderColor;
+        border-radius: 3px;
+        &:hover {
+            color: #000;
+        }
+    }
+}

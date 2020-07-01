@@ -3,13 +3,28 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "node server/index.js",
     "build": "next build",
-    "start": "next start"
+    "start": "NODE_ENV=production node server/index.js"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
+    "axios": "^0.19.2",
+    "bootstrap": "^4.5.0",
+    "ckeditor4-react": "^1.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.20",
+    "mongoose-unique-validator": "^2.0.3",
+    "multer": "^1.4.2",
     "next": "9.4.4",
     "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "react-bootstrap": "^1.0.1",
+    "react-dom": "16.13.1",
+    "react-icons": "^3.10.0",
+    "sass": "^1.26.9"
   }
 }

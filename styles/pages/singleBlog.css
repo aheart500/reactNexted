@@ -1,0 +1,64 @@
+.subscription-form {
+  background: url("/assets/images/home/logotype.svg") no-repeat center/contain;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  font-size: 1.1rem;
+  font-weight: 800;
+  padding: 10rem;
+}
+.blog-page {
+  min-height: 100vh;
+}
+.single-blog {
+  text-align: right;
+  width: 80%;
+  margin: 2rem auto 3.5rem auto;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 10px;
+  border: 1px solid black;
+  font-family: "Tajawal", sans-serif;
+}
+.single-blog span {
+  font-size: 1.2rem;
+  font-style: italic;
+  font-weight: bold;
+}
+@media (max-width: 576px) {
+  .single-blog {
+    width: 95%;
+  }
+}
+
+.blog-page nav button {
+  display: inline-block;
+  width: 100%;
+  height: 55px;
+  line-height: 45px;
+  font-size: 23px;
+  font-weight: 500;
+  border: 1.5px solid #707070;
+  border-radius: 5px;
+  margin-bottom: 14px;
+  transition: all 0.2s ease-in-out;
+  background-color: transparent;
+  outline: none;
+}
+.blog-page nav button.active,
+.blog-page nav button:hover {
+  background-color: #000;
+  color: #fff;
+  border-color: #000;
+}
+.blog-rendered::after {
+  content: "";
+  clear: both;
+  display: block;
+}
+.news-card .card-info .info-desc p {
+  height: 5rem;
+  overflow: hidden;
+}

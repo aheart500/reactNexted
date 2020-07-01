@@ -1,0 +1,146 @@
+.news-card {
+    background-color: #FFF;
+    border: 1px solid $borderColor;
+    padding: 20px;
+    margin-bottom: 10px;
+    position: relative;
+    @include prefixer(box-shadow, 0px 3px 10px #000, webkit moz o ms);
+
+    @media #{$maxMobile} {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    
+
+    .main-row {
+        display: flex;
+        align-items: center;
+    }
+    
+    .card-image {
+        padding: 20px;
+        padding-right: 0;
+        border-left: 1.5px solid $borderColor;
+
+        @media #{$maxMobile} {
+            padding-left: 10px;
+        }
+        
+        img {
+            width: 100%;
+            
+        }
+    }
+
+    .card-info {
+        .info-header {
+            .history {
+                display: flex;
+                font-size: 12px;
+                font-weight: 300;
+
+                @media #{$maxMobile} {
+                    font-size: 10px;
+                }
+
+                a {
+                    display: flex;
+                    background-color: #D6C8C8;
+                    width: 15px;
+                    height: 15px;
+                    border-radius: 50%;
+                    justify-content: center;
+                    align-items: center;
+                    margin-left: 10px;
+                    align-self: center;
+                    img {
+                        width: 10px;
+                        height: 10px; 
+                    }
+                }
+            }
+            .news {
+                display: flex;
+                font-size: 13px;
+                font-weight: 500;
+                margin-top: 5px;
+
+                @media #{$maxMobile} {
+                    font-size: 11px;
+                }
+            }
+        }
+
+        .info-desc {
+            h5 {
+                color: $themeColor;
+                font-weight: 700;
+                font-size: 20px;
+                @media #{$maxMobile} {
+                    font-size: 16px;
+                }
+            }
+
+            p {
+                font-size: 14px;
+                font-weight: 500;
+                text-align: right;
+                @media #{$maxMobile} {
+                    font-size: 12px;
+                }
+            }
+        }
+
+        .info-footer {
+            display: flex;
+            justify-content: space-between;
+            @media #{$maxSmall} {
+                margin-right: -32px;
+                margin-top: 50px;
+            }
+            .reading {
+                display: inline-block;
+                padding: 8px 15px;
+                background-color: #000;
+                color: #FFF;
+                font-size: 13px;
+                font-weight: 700;
+                @include prefixer(box-shadow, 0px 3px 5px #000, webkit moz o ms);
+                @media #{$maxSmall} {
+                    font-size: 11px;
+                    font-weight: 500;
+                    height: 30px;
+                    line-height: 13px;
+                }
+            }
+
+
+            ul {
+                display: flex;
+                padding: 0;
+                li {
+                    margin-left: 5px;
+
+                    @media #{$maxMobile} {
+                        margin-left: 2px;
+                    }
+            
+                    img {
+                        width: 20px;
+                        height: 20px;
+                    }
+
+                    &.share {
+                        margin-left: 10px;
+                        
+                    }
+                }
+            }
+        }
+    }
+    .save {
+        position: absolute;
+        top: -1px;
+        left: 10px;
+    }
+}
