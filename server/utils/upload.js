@@ -1,7 +1,7 @@
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
-const saveFolder = path.join(__dirname, "../images");
+const saveFolder = path.join(__dirname, "../../public/images");
 if (!fs.existsSync(saveFolder)) {
   fs.mkdirSync(saveFolder);
 }
