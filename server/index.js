@@ -11,8 +11,9 @@ const mongoose = require("mongoose");
 const config = require("./utils/config");
 const adminRouter = require("./controllers/AdminRouter");
 const userRouter = require("./controllers/UserRouter");
+console.log(process.env.SECRET);
 mongoose
-  .connect(config.MongoDB_URI, {
+  .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useFindAndModify: false,
     useCreateIndex: true,
