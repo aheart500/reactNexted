@@ -24,7 +24,7 @@ router.get("/", async (req, res) => {
       rows.push({
         ...users[i]._doc,
         country_name: country ? country.name : "",
-        city_name: city ? city.name : ""
+        city_name: city ? city.name : "",
       });
     }
 
@@ -37,11 +37,11 @@ router.get("/", async (req, res) => {
 router.post("/", upload.single("img"), async (req, res) => {
   const url = req.protocol + "://" + req.get("host");
   let userData = JSON.parse(req.body.userData);
-
+  console.log(req.file);
   var postData = {
     ...userData,
     unique: unique(),
-    img: req.file ? url + "/images/" + req.file.filename : ""
+    img: req.file ? url + "/images/" + req.file.filename : "",
   };
   try {
     let user = userModel(postData);
@@ -54,14 +54,14 @@ router.post("/", upload.single("img"), async (req, res) => {
     }
     user
       .save()
-      .then(rows => {
+      .then((rows) => {
         res.send({
           ...rows._doc,
           country_name: country ? country.name : "",
-          city_name: city ? city.name : ""
+          city_name: city ? city.name : "",
         });
       })
-      .catch(err => res.end(err));
+      .catch((err) => res.end(err));
   } catch (err) {
     res.end(err);
   }
@@ -69,6 +69,8 @@ router.post("/", upload.single("img"), async (req, res) => {
 router.put("/user/:id", upload.single("img"), async (req, res) => {
   const url = req.protocol + "://" + req.get("host");
   let userData = JSON.parse(req.body.userData);
+  console.log(req.file);
+
   try {
     let country, city;
     if (req.body.country !== "") {
@@ -82,18 +84,18 @@ router.put("/user/:id", upload.single("img"), async (req, res) => {
         req.params.id,
         {
           ...userData,
-          img: req.file ? url + "/images/" + req.file.filename : userData.img
+          img: req.file ? url + "/images/" + req.file.filename : userData.img,
         },
         { new: true }
       )
-      .then(rows => {
+      .then((rows) => {
         res.send({
           ...rows._doc,
           country_name: country ? country.name : "",
-          city_name: city ? city.name : ""
+          city_name: city ? city.name : "",
         });
       })
-      .catch(err => res.send(err));
+      .catch((err) => res.send(err));
   } catch (err) {
     res.end(err);
   }
@@ -102,45 +104,45 @@ router.put("/user/:id", upload.single("img"), async (req, res) => {
 router.delete("/:id", (req, res) => {
   userModel
     .findByIdAndRemove(req.params.id)
-    .then(rows => res.send("Deleted Successfully"))
-    .catch(err => res.send(err));
+    .then((rows) => res.send("Deleted Successfully"))
+    .catch((err) => res.send(err));
 });
 
 router.put("/vip", (req, res) => {
   const usersToConvert = req.body;
   userModel
     .updateMany({ _id: { $in: usersToConvert } }, { status: 1 })
-    .then(response => res.send("success"))
-    .catch(err => res.end(err));
+    .then((response) => res.send("success"))
+    .catch((err) => res.end(err));
 });
 router.put("/normal", (req, res) => {
   const usersToConvert = req.body;
   userModel
     .updateMany({ _id: { $in: usersToConvert } }, { status: 0 })
-    .then(response => res.send("success"))
-    .catch(err => res.end(err));
+    .then((response) => res.send("success"))
+    .catch((err) => res.end(err));
 });
 router.put("/block", (req, res) => {
   const usersToConvert = req.body;
   userModel
     .updateMany({ _id: { $in: usersToConvert } }, { block: 1 })
-    .then(response => res.send("success"))
-    .catch(err => res.end(err));
+    .then((response) => res.send("success"))
+    .catch((err) => res.end(err));
 });
 
 router.put("/unblock", (req, res) => {
   const usersToConvert = req.body;
   userModel
     .updateMany({ _id: { $in: usersToConvert } }, { block: 0 })
-    .then(response => res.send("success"))
-    .catch(err => res.end(err));
+    .then((response) => res.send("success"))
+    .catch((err) => res.end(err));
 });
 router.put("/delete", (req, res) => {
   const usersToDelete = req.body;
   userModel
     .deleteMany({ _id: { $in: usersToDelete } })
-    .then(response => res.send("success"))
-    .catch(err => res.end(err));
+    .then((response) => res.send("success"))
+    .catch((err) => res.end(err));
 });
 
 module.exports = router;
