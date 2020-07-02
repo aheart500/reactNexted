@@ -164,7 +164,15 @@ function Home({ user, settings, vipUsers, ads }) {
                   justifyContent: "center",
                 }}
               >
-                <LatestGhost persons={[user]} link={settings.link} />
+                {user ? (
+                  <LatestGhost persons={[user]} link={settings.link} />
+                ) : (
+                  <>
+                    <div className="empty-search">
+                      <h3>لا توجد نتائج</h3>
+                    </div>
+                  </>
+                )}
               </Row>
             </Container>
           </section>
@@ -182,10 +190,11 @@ function Home({ user, settings, vipUsers, ads }) {
 export async function getServerSideProps(context) {
   let settings = await settingsModel.findOne({}).lean();
   let tags = await tagsModel.find({}).lean();
+
   if (settings) {
     settings = {
       ...settings,
-      link: tags ? tags[0].link : "",
+      link: tags.length > 1 ? tags[0].link : "",
     };
   } else {
     settings = {

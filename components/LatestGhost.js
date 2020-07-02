@@ -93,7 +93,7 @@ const LatestGhost = React.memo(({ persons, link }) => {
             >
               <div className="heading-item">
                 <Link href={`/user/نشر-سناب-${person.unique}-سنابيسو`}>
-                  <a onClick={() => window.scrollTo({ top: 0 })}>
+                  <a>
                     <h2>{person.name}</h2>
                   </a>
                 </Link>

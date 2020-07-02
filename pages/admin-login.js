@@ -3,11 +3,11 @@ import { login, logged } from "../services/AdminServices";
 import Router from "next/router";
 import Loader from "../components/Loader";
 
-const AdminLogin = ({ secret }) => {
+const AdminLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  console.log(secret);
+
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     let loggedAdmin = JSON.parse(window.localStorage.getItem("admin"));
@@ -63,10 +63,3 @@ const AdminLogin = ({ secret }) => {
 };
 
 export default AdminLogin;
-export async function getServerSideProps() {
-  return {
-    props: {
-      secret: process.env.SECRET,
-    },
-  };
-}
