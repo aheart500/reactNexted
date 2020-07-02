@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import Link from "next/link";
+import Head from "next/head";
 import {
   getAllCities,
   getAllCountries,
@@ -105,164 +106,183 @@ function AddAccount() {
   };
 
   return (
-    <div
-      className={
-        theme.themeName === "dark" ? "app-container dark" : "app-container"
-      }
-    >
-      <div className="add-account">
-        {/* Start Header */}
-        <header>
-          <Container>
-            {/* Start Heading */}
-            <div className="heading-page">
-              <Link href="/">
-                <a>
-                  <img src="/assets/images/blog/icons/arrow.svg" alt="Back" />
-                </a>
-              </Link>
-              <h2 className="text-align">أضف بياناتك</h2>
-            </div>
-            {/* End Heading */}
-            {/* Start Nav */}
-            <nav className="d-none d-md-block text-center">
-              <Row>
-                <Col md={4}>
-                  <Link href="/">
-                    <a>الرئيسية </a>
-                  </Link>
-                </Col>
-                <Col md={4}>
-                  <Link href="/add-account">
-                    <a className="active">إضافة حساب </a>
-                  </Link>
-                </Col>
-                <Col md={4}>
-                  <Link href="/subscription">
-                    <a>إشتراك</a>
-                  </Link>
-                </Col>
-              </Row>
-            </nav>
-            {/* End Nav */}
-          </Container>
-        </header>
-        {/* End Header */}
+    <>
+      <Head>
+        <meta
+          name="description"
+          content="تعارف سناب شات اضافات سنابيسو لزيادة مشاهدات سناب شات إضافة حساب"
+        />
 
-        {/* Start Body */}
-        <section className="add-body text-center">
-          {message && <div className="user-form">{message}</div>}
-          {showForm && (
-            <>
-              <form className="user-form" onSubmit={(e) => e.preventDefault()}>
-                <label htmlFor="name">الأسم</label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={userData.name}
-                  onChange={handleChange}
-                />
-                <span className="required-message">{nameRequired}</span>
-                <label htmlFor="username" className="username-label">
-                  اسم المستخدم
-                </label>
-                <input
-                  type="text"
-                  id="username"
-                  name="username"
-                  value={userData.username}
-                  onChange={handleChange}
-                />
-                <span className="required-message">{usernameRequired}</span>
-                <label htmlFor="age">العمر</label>
-                <select
-                  id="age"
-                  name="age"
-                  onChange={handleChange}
-                  required={true}
+        <meta
+          name="google-site-verification"
+          content="YuD3YwsOTJk9v9zC9HGz3UMPy5xt8VNrCDxPznahAZY"
+        />
+        <meta name="robots" content="index,follow" />
+
+        <title>إضافة حساب</title>
+      </Head>
+      <div
+        className={
+          theme.themeName === "dark" ? "app-container dark" : "app-container"
+        }
+      >
+        <div className="add-account">
+          {/* Start Header */}
+          <header>
+            <Container>
+              {/* Start Heading */}
+              <div className="heading-page">
+                <Link href="/">
+                  <a>
+                    <img src="/assets/images/blog/icons/arrow.svg" alt="Back" />
+                  </a>
+                </Link>
+                <h2 className="text-align">أضف بياناتك</h2>
+              </div>
+              {/* End Heading */}
+              {/* Start Nav */}
+              <nav className="d-none d-md-block text-center">
+                <Row>
+                  <Col md={4}>
+                    <Link href="/">
+                      <a>الرئيسية </a>
+                    </Link>
+                  </Col>
+                  <Col md={4}>
+                    <Link href="/add-account">
+                      <a className="active">إضافة حساب </a>
+                    </Link>
+                  </Col>
+                  <Col md={4}>
+                    <Link href="/subscription">
+                      <a>إشتراك</a>
+                    </Link>
+                  </Col>
+                </Row>
+              </nav>
+              {/* End Nav */}
+            </Container>
+          </header>
+          {/* End Header */}
+
+          {/* Start Body */}
+          <section className="add-body text-center">
+            {message && <div className="user-form">{message}</div>}
+            {showForm && (
+              <>
+                <form
+                  className="user-form"
+                  onSubmit={(e) => e.preventDefault()}
                 >
-                  <option value=""></option>
-                  {numbers.map((n) => {
-                    return (
-                      <option key={n} value={n}>
-                        {n}
-                      </option>
-                    );
-                  })}
-                </select>
-                <span className="required-message">{ageRequired}</span>
-                <label htmlFor="sex">النوع</label>
-                <select id="sex" name="sex" onChange={handleChange}>
-                  <option value=""></option>
-                  <option value="0">ذكر</option>
-                  <option value="1">أنثى</option>
-                </select>
-                <span className="required-message">{sexRequired}</span>
-                <label htmlFor="country">الدولة</label>
-                <select
-                  id="country"
-                  name="country"
-                  onChange={handleChange}
-                  required={true}
-                >
-                  <option value=""></option>
-                  {countries.map((country) => {
-                    return (
-                      <option key={country._id} value={country._id}>
-                        {country.name}
-                      </option>
-                    );
-                  })}
-                </select>
-                <span className="required-message">{countryRequired}</span>
-                <label htmlFor="city">المدينة</label>
-                <select
-                  id="city"
-                  name="city"
-                  onChange={handleChange}
-                  required={true}
-                >
-                  <option value=""></option>
-                  {cities
-                    .filter((city) => city.country_id === userData.country)
-                    .map((city) => {
+                  <label htmlFor="name">الأسم</label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={userData.name}
+                    onChange={handleChange}
+                  />
+                  <span className="required-message">{nameRequired}</span>
+                  <label htmlFor="username" className="username-label">
+                    اسم المستخدم
+                  </label>
+                  <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    value={userData.username}
+                    onChange={handleChange}
+                  />
+                  <span className="required-message">{usernameRequired}</span>
+                  <label htmlFor="age">العمر</label>
+                  <select
+                    id="age"
+                    name="age"
+                    onChange={handleChange}
+                    required={true}
+                  >
+                    <option value=""></option>
+                    {numbers.map((n) => {
                       return (
-                        <option key={city._id} value={city._id}>
-                          {city.name}
+                        <option key={n} value={n}>
+                          {n}
                         </option>
                       );
                     })}
-                </select>
-                <span className="required-message">{cityRequired}</span>
-                <label htmlFor="message">الرسالة</label>
-                <select id="message" name="message" onChange={handleChange}>
-                  <option value=""></option>
-                  {messages.map((message) => {
-                    return (
-                      <option key={message._id} value={message.text}>
-                        {message.text}
-                      </option>
-                    );
-                  })}
-                </select>
-                <span className="required-message">{messageRequired}</span>
-              </form>
-              <button
-                type="button"
-                onClick={handleSubmit}
-                className="special-button"
-                disabled={buttonDisabled}
-              >
-                أضف حسابك
-              </button>
-            </>
-          )}
-        </section>
-        {/* End Body */}
+                  </select>
+                  <span className="required-message">{ageRequired}</span>
+                  <label htmlFor="sex">النوع</label>
+                  <select id="sex" name="sex" onChange={handleChange}>
+                    <option value=""></option>
+                    <option value="0">ذكر</option>
+                    <option value="1">أنثى</option>
+                  </select>
+                  <span className="required-message">{sexRequired}</span>
+                  <label htmlFor="country">الدولة</label>
+                  <select
+                    id="country"
+                    name="country"
+                    onChange={handleChange}
+                    required={true}
+                  >
+                    <option value=""></option>
+                    {countries.map((country) => {
+                      return (
+                        <option key={country._id} value={country._id}>
+                          {country.name}
+                        </option>
+                      );
+                    })}
+                  </select>
+                  <span className="required-message">{countryRequired}</span>
+                  <label htmlFor="city">المدينة</label>
+                  <select
+                    id="city"
+                    name="city"
+                    onChange={handleChange}
+                    required={true}
+                  >
+                    <option value=""></option>
+                    {cities
+                      .filter((city) => city.country_id === userData.country)
+                      .map((city) => {
+                        return (
+                          <option key={city._id} value={city._id}>
+                            {city.name}
+                          </option>
+                        );
+                      })}
+                  </select>
+                  <span className="required-message">{cityRequired}</span>
+                  <label htmlFor="message">الرسالة</label>
+                  <select id="message" name="message" onChange={handleChange}>
+                    <option value=""></option>
+                    {messages.map((message) => {
+                      return (
+                        <option key={message._id} value={message.text}>
+                          {message.text}
+                        </option>
+                      );
+                    })}
+                  </select>
+                  <span className="required-message">{messageRequired}</span>
+                </form>
+                <button
+                  type="button"
+                  onClick={handleSubmit}
+                  className="special-button"
+                  disabled={buttonDisabled}
+                >
+                  أضف حسابك
+                </button>
+              </>
+            )}
+          </section>
+          {/* End Body */}
+        </div>
+        <Footer page="add-account" />
       </div>
-      <Footer page="add-account" />
-    </div>
+    </>
   );
 }
 

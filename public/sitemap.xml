@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"> 
+    <url>
+      <loc>https://snappso.herokuapp.com/_app</loc>
+      <lastmod>2020-07-02</lastmod>
+    </url>,<url>
+      <loc>https://snappso.herokuapp.com/_document</loc>
+      <lastmod>2020-07-02</lastmod>
+    </url>,<url>
+      <loc>https://snappso.herokuapp.com/add-account</loc>
+      <lastmod>2020-07-02</lastmod>
+    </url>,<url>
+      <loc>https://snappso.herokuapp.com/admin-login</loc>
+      <lastmod>2020-07-02</lastmod>
+    </url>,<url>
+      <loc>https://snappso.herokuapp.com/admin</loc>
+      <lastmod>2020-07-01</lastmod>
+    </url>,<url>
+      <loc>https://snappso.herokuapp.com/blog/[name]</loc>
+      <lastmod>2020-07-02</lastmod>
+    </url>,<url>
+      <loc>https://snappso.herokuapp.com/blog/index</loc>
+      <lastmod>2020-07-02</lastmod>
+    </url>,<url>
+      <loc>https://snappso.herokuapp.com/index</loc>
+      <lastmod>2020-07-02</lastmod>
+    </url>,<url>
+      <loc>https://snappso.herokuapp.com/subscription</loc>
+      <lastmod>2020-07-02</lastmod>
+    </url>,<url>
+      <loc>https://snappso.herokuapp.com/user/[unique]</loc>
+      <lastmod>2020-07-02</lastmod>
+    </url>
+  </urlset>

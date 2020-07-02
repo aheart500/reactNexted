@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import Link from "next/link";
+import Head from "next/head";
 import { Container, Row, Col } from "react-bootstrap";
 import ThemeContext from "../../ThemeContext";
 // components
@@ -26,113 +27,129 @@ function Blog({ blogs }) {
   };
 
   return (
-    <div
-      className={
-        theme.themeName === "dark" ? "app-container dark" : "app-container"
-      }
-    >
-      <div className="blog-page">
-        {/* Start Header */}
-        <header>
-          <Container>
-            {/* Start Heading */}
-            <div className="heading-page">
-              <a href="/#">
-                <img src="/assets/images/blog/icons/arrow.svg" alt="Back" />
-              </a>
-              <h2 className="text-align">المدونة</h2>
-            </div>
-            {/* End Heading */}
+    <>
+      <Head>
+        <meta
+          name="description"
+          content="تعارف سناب شات اضافات سنابيسو لزيادة مشاهدات سناب شات مدونة"
+        />
 
-            {/* Start Nav */}
-            <nav>
+        <meta
+          name="google-site-verification"
+          content="YuD3YwsOTJk9v9zC9HGz3UMPy5xt8VNrCDxPznahAZY"
+        />
+        <meta name="robots" content="index,follow" />
+
+        <title>مدونة سنابيسو</title>
+      </Head>
+      <div
+        className={
+          theme.themeName === "dark" ? "app-container dark" : "app-container"
+        }
+      >
+        <div className="blog-page">
+          {/* Start Header */}
+          <header>
+            <Container>
+              {/* Start Heading */}
+              <div className="heading-page">
+                <a href="/#">
+                  <img src="/assets/images/blog/icons/arrow.svg" alt="Back" />
+                </a>
+                <h2 className="text-align">المدونة</h2>
+              </div>
+              {/* End Heading */}
+
+              {/* Start Nav */}
+              <nav>
+                <Row>
+                  <Col xs={6} md={3}>
+                    <button
+                      type="button"
+                      className={classification === "all" ? "active" : ""}
+                      onClick={() => setClassification("all")}
+                    >
+                      الكل
+                    </button>
+                  </Col>
+                  <Col xs={6} md={3}>
+                    <button
+                      type="button"
+                      className={classification === "news" ? "active" : ""}
+                      onClick={() => setClassification("news")}
+                    >
+                      الأخبار
+                    </button>
+                  </Col>
+                  <Col xs={6} md={3}>
+                    <button
+                      type="button"
+                      className={classification === "articles" ? "active" : ""}
+                      onClick={() => setClassification("articles")}
+                    >
+                      المقالات
+                    </button>
+                  </Col>
+                  <Col xs={6} md={3}>
+                    <button
+                      type="button"
+                      className={classification === "favorite" ? "active" : ""}
+                      onClick={() => setClassification("favorite")}
+                    >
+                      المفضلة
+                    </button>
+                  </Col>
+                </Row>
+              </nav>
+              {/* End Nav */}
+            </Container>
+          </header>
+          {/* End Header */}
+
+          {/* Start Body */}
+
+          {/* Start News cards */}
+          <section className="news-cards">
+            <Container>
               <Row>
-                <Col xs={6} md={3}>
-                  <button
-                    type="button"
-                    className={classification === "all" ? "active" : ""}
-                    onClick={() => setClassification("all")}
-                  >
-                    الكل
-                  </button>
-                </Col>
-                <Col xs={6} md={3}>
-                  <button
-                    type="button"
-                    className={classification === "news" ? "active" : ""}
-                    onClick={() => setClassification("news")}
-                  >
-                    الأخبار
-                  </button>
-                </Col>
-                <Col xs={6} md={3}>
-                  <button
-                    type="button"
-                    className={classification === "articles" ? "active" : ""}
-                    onClick={() => setClassification("articles")}
-                  >
-                    المقالات
-                  </button>
-                </Col>
-                <Col xs={6} md={3}>
-                  <button
-                    type="button"
-                    className={classification === "favorite" ? "active" : ""}
-                    onClick={() => setClassification("favorite")}
-                  >
-                    المفضلة
-                  </button>
-                </Col>
+                {blogsToRender().length > 0 ? (
+                  blogsToRender().map((blog) => (
+                    <NewsCard key={blog._id} blog={blog} />
+                  ))
+                ) : (
+                  <h2>لا توجد مدونات</h2>
+                )}
               </Row>
-            </nav>
-            {/* End Nav */}
-          </Container>
-        </header>
-        {/* End Header */}
+            </Container>
+          </section>
+          {/* End News cards */}
 
-        {/* Start Body */}
+          {/* Start Read more button */}
+          <section className="read-more text-center">
+            <Container>
+              <a href="/#">إقرا المزيد</a>
+            </Container>
+          </section>
+          {/* End Read more button */}
 
-        {/* Start News cards */}
-        <section className="news-cards">
-          <Container>
-            <Row>
-              {blogsToRender().length > 0 ? (
-                blogsToRender().map((blog) => (
-                  <NewsCard key={blog._id} blog={blog} />
-                ))
-              ) : (
-                <h2>لا توجد مدونات</h2>
-              )}
-            </Row>
-          </Container>
-        </section>
-        {/* End News cards */}
+          {/* End Body */}
 
-        {/* Start Read more button */}
-        <section className="read-more text-center">
-          <Container>
-            <a href="/#">إقرا المزيد</a>
-          </Container>
-        </section>
-        {/* End Read more button */}
-
-        {/* End Body */}
-
-        <section className="pages-controls d-md-none">
-          <Container>
-            <Link href="/add-account">
-              <a className="active">إضافة حساب </a>
-            </Link>
-            <Link href="/">
-              <a className="hover">الرئيسية </a>
-            </Link>
-            <Link href="/subscription">
-              <a className="premium">إشتراك</a>
-            </Link>
-          </Container>
-        </section>
+          <section className="pages-controls d-md-none">
+            <Container>
+              <Link href="/add-account">
+                <a className="active">إضافة حساب </a>
+              </Link>
+              <Link href="/">
+                <a className="hover">الرئيسية </a>
+              </Link>
+              <Link href="/subscription">
+                <a className="premium">إشتراك</a>
+              </Link>
+            </Container>
+          </section>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 export async function getServerSideProps() {

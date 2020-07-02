@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useContext } from "react";
 import Link from "next/link";
+import Head from "next/head";
 import SettingModel from "../server/models/settings";
 import { Container, Row, Col } from "react-bootstrap";
 import Footer from "../components/Footer";
@@ -8,65 +9,81 @@ function Subscription({ message }) {
   const { theme } = useContext(ThemeContext);
 
   return (
-    <div
-      className={
-        theme.themeName === "dark" ? "app-container dark" : "app-container"
-      }
-    >
-      <div className="subscription">
-        {/* Start Header */}
-        <header>
-          <Container>
-            {/* Start Heading */}
-            <div className="heading-page">
-              <Link href="/">
-                <a>
-                  <img src="/assets/images/blog/icons/arrow.svg" alt="Back" />
-                </a>
-              </Link>
-              <h2 className="text-align">أضف بياناتك</h2>
-            </div>
-            {/* End Heading */}
-            {/* Start Nav */}
-            <nav className="d-none d-md-block text-center">
-              <Row>
-                <Col md={4}>
-                  <Link href="/">
-                    <a>الرئيسية </a>
-                  </Link>
-                </Col>
-                <Col md={4}>
-                  <Link href="/add-account">
-                    <a>إضافة حساب </a>
-                  </Link>
-                </Col>
-                <Col md={4}>
-                  <Link href="/subscription">
-                    <a className="active">إشتراك</a>
-                  </Link>
-                </Col>
-              </Row>
-            </nav>
-            {/* End Nav */}
-          </Container>
-        </header>
-        {/* End Header */}
+    <>
+      <Head>
+        <meta
+          name="description"
+          content="تعارف سناب شات اضافات سنابيسو لزيادة مشاهدات سناب شات الاشتراك"
+        />
 
-        {/* Start Body */}
-        <section className="subscription-body text-center">
-          <Container>
-            <div className="subscription-form">
-              <div dangerouslySetInnerHTML={{ __html: message }}></div>
-            </div>
-          </Container>
-        </section>
-        {/* End Body */}
+        <meta
+          name="google-site-verification"
+          content="YuD3YwsOTJk9v9zC9HGz3UMPy5xt8VNrCDxPznahAZY"
+        />
+        <meta name="robots" content="index,follow" />
+
+        <title>الأشتراك</title>
+      </Head>
+      <div
+        className={
+          theme.themeName === "dark" ? "app-container dark" : "app-container"
+        }
+      >
+        <div className="subscription">
+          {/* Start Header */}
+          <header>
+            <Container>
+              {/* Start Heading */}
+              <div className="heading-page">
+                <Link href="/">
+                  <a>
+                    <img src="/assets/images/blog/icons/arrow.svg" alt="Back" />
+                  </a>
+                </Link>
+                <h2 className="text-align">أضف بياناتك</h2>
+              </div>
+              {/* End Heading */}
+              {/* Start Nav */}
+              <nav className="d-none d-md-block text-center">
+                <Row>
+                  <Col md={4}>
+                    <Link href="/">
+                      <a>الرئيسية </a>
+                    </Link>
+                  </Col>
+                  <Col md={4}>
+                    <Link href="/add-account">
+                      <a>إضافة حساب </a>
+                    </Link>
+                  </Col>
+                  <Col md={4}>
+                    <Link href="/subscription">
+                      <a className="active">إشتراك</a>
+                    </Link>
+                  </Col>
+                </Row>
+              </nav>
+              {/* End Nav */}
+            </Container>
+          </header>
+          {/* End Header */}
+
+          {/* Start Body */}
+          <section className="subscription-body text-center">
+            <Container>
+              <div className="subscription-form">
+                <div dangerouslySetInnerHTML={{ __html: message }}></div>
+              </div>
+            </Container>
+          </section>
+          {/* End Body */}
+        </div>
+        <Footer page="subs" />
       </div>
-      <Footer page="subs" />
-    </div>
+    </>
   );
 }
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const message = await SettingModel.findOne({})
     .select({ vip_message: 1 })
     .lean();

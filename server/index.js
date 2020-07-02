@@ -8,7 +8,6 @@ const cors = require("cors");
 const express = require("express");
 var app = express();
 const mongoose = require("mongoose");
-const config = require("./utils/config");
 const adminRouter = require("./controllers/AdminRouter");
 const userRouter = require("./controllers/UserRouter");
 
