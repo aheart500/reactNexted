@@ -175,7 +175,15 @@ const PersonsFilter = React.memo(({ setPage }) => {
               search: query,
             }}
           >
-            <a onClick={() => setPage(1)}>البحث</a>
+            <a
+              onClick={() => {
+                if (setPage) {
+                  setPage(1);
+                }
+              }}
+            >
+              البحث
+            </a>
           </Link>
         )}
       </div>

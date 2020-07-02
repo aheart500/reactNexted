@@ -1,22 +1,12 @@
 import React, { useEffect, useState, useContext } from "react";
 import Link from "next/link";
-import { getSettings } from "../services/UserServices";
+import SettingModel from "../server/models/settings";
 import { Container, Row, Col } from "react-bootstrap";
 import Footer from "../components/Footer";
 import ThemeContext from "../ThemeContext";
-function Subscription() {
-  const [setting, setSetting] = useState(null);
-  const [loading, setLoading] = useState(true);
+function Subscription({ message }) {
   const { theme } = useContext(ThemeContext);
-  useEffect(() => {
-    if (!setting) {
-      getSettings().then((res) => {
-        setSetting(res);
-        setLoading(false);
-      });
-    }
-  }, []);
-  if (loading) return null;
+
   return (
     <div
       className={
@@ -66,9 +56,7 @@ function Subscription() {
         <section className="subscription-body text-center">
           <Container>
             <div className="subscription-form">
-              <div
-                dangerouslySetInnerHTML={{ __html: setting.vip_message }}
-              ></div>
+              <div dangerouslySetInnerHTML={{ __html: message }}></div>
             </div>
           </Container>
         </section>
@@ -77,6 +65,16 @@ function Subscription() {
       <Footer page="subs" />
     </div>
   );
+}
+export async function getServerSideProps() {
+  const message = await SettingModel.findOne({})
+    .select({ vip_message: 1 })
+    .lean();
+  return {
+    props: {
+      message: message.vip_message,
+    },
+  };
 }
 
 export default Subscription;

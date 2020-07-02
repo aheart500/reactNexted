@@ -1,12 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import ThemeContext from "../../ThemeContext";
-import {
-  getVipUsers,
-  getNormalUsers,
-  getSearchUsers,
-  getAds,
-  getSingleUser,
-} from "../../services/UserServices";
+
 import ThemeButton from "../../components/ThemeButton";
 import Footer from "../../components/Footer";
 
@@ -19,77 +13,12 @@ import AD from "../../components/Ad";
 import tagsModel from "../../server/models/tag";
 import userModel from "../../server/models/user";
 import settingsModel from "../../server/models/settings";
-
-function Home({ user, settings, queryParams }) {
-  const [normalUsers, setNormalUsers] = useState([]);
-  const [vipUsers, setVipUsers] = useState([]);
-  const [ads, setAds] = useState([]);
-  const [ghostsLoading, setGhostsLoading] = useState(true);
-  const [nSearch, setnSearch] = useState(0);
-  const [page, setPage] = useState(1);
+import countryModel from "../../server/models/country";
+import cityModel from "../../server/models/city";
+import adModel from "../../server/models/ad";
+function Home({ user, settings, vipUsers, ads }) {
   const { theme, changeTheme } = useContext(ThemeContext);
-  useEffect(() => {
-    getVipUsers(1, settings.vip_per_page)
-      .then((res) => setVipUsers(res))
-      .catch((err) => console.log(err));
-    getAds()
-      .then((res) => setAds(res))
-      .catch((err) => console.log(err));
-  }, [settings]);
-  useEffect(() => {
-    if (!user) {
-      setGhostsLoading(true);
-      if (queryParams === {}) {
-        getNormalUsers(page, settings.normal_per_page)
-          .then((res) => setNormalUsers(res))
-          .catch((err) => console.log(err))
-          .finally(() => setGhostsLoading(false));
-      } else {
-        if (queryParams.city) {
-          let cityName = queryParams.city;
-          document.title = `${settings.site_name} ${cityName}`;
-        } else if (queryParams.country) {
-          let countryName = queryParams.country;
-          document.title = `${settings.site_name} ${countryName}`;
-        }
-        getSearchUsers(queryParams, page, settings.normal_per_page)
-          .then((res) => {
-            setNormalUsers(res.users);
-            setnSearch(res.nFound);
-          })
-          .catch((err) => console.log(err))
-          .finally(() => setGhostsLoading(false));
-      }
-    } else {
-      getSingleUser(queryParams.unique)
-        .then((res) => {
-          if (res.username) {
-            setNormalUsers([res]);
-          }
-        })
-        .catch((err) => console.log(err))
-        .finally(() => setGhostsLoading(false));
-    }
-  }, [queryParams, settings, page, user]);
-  const paginator = () => {
-    let l = queryParams !== {} ? nSearch : settings.nUsers;
 
-    let nPages = Math.ceil(l / settings.normal_per_page);
-    if (nPages <= 1) return null;
-    let buttons = [];
-    for (let i = 1; i <= nPages; i++) buttons.push(i);
-    return (
-      <div className="paginator">
-        {buttons.map((button, index) => {
-          return (
-            <button type="button" key={index} onClick={() => setPage(button)}>
-              {button}
-            </button>
-          );
-        })}
-      </div>
-    );
-  };
   return (
     <div
       className={
@@ -210,7 +139,7 @@ function Home({ user, settings, queryParams }) {
             <div className="main-heading">
               <h4>إبحث عن الأشباح</h4>
             </div>
-            <PersonsFilter persons={normalUsers} setPage={setPage} />
+            <PersonsFilter />
             <br />
 
             {ads
@@ -223,30 +152,24 @@ function Home({ user, settings, queryParams }) {
         {/* End Search */}
 
         {/* Latest Ghosts */}
-        {ghostsLoading ? (
-          <div className="special-loader-container">
-            <div className="special-loader"></div>
-          </div>
-        ) : (
-          <>
-            <section className={`latest-ghosts ${theme.themeName}`}>
-              <Container>
-                <div className="main-heading">
-                  <h4>آخر الأشباح</h4>
-                </div>
-                <Row
-                  style={{
-                    justifyContent: normalUsers.length === 1 ? "center" : "",
-                  }}
-                >
-                  <LatestGhost persons={normalUsers} link={settings.link} />
-                </Row>
-              </Container>
-            </section>
 
-            {user ? null : paginator()}
-          </>
-        )}
+        <>
+          <section className={`latest-ghosts ${theme.themeName}`}>
+            <Container>
+              <div className="main-heading">
+                <h4>آخر الأشباح</h4>
+              </div>
+              <Row
+                style={{
+                  justifyContent: "center",
+                }}
+              >
+                <LatestGhost persons={[user]} link={settings.link} />
+              </Row>
+            </Container>
+          </section>
+        </>
+
         {/* End Ghosts */}
 
         {/* End Body */}
@@ -258,13 +181,11 @@ function Home({ user, settings, queryParams }) {
 
 export async function getServerSideProps(context) {
   let settings = await settingsModel.findOne({}).lean();
-  let link = await tagsModel.findOne({}).select({ link: 1 }).lean();
-  let nUsers = await userModel.estimatedDocumentCount();
+  let tags = await tagsModel.find({}).lean();
   if (settings) {
     settings = {
       ...settings,
-      link: link ? link.link : "",
-      nUsers: nUsers ? nUsers : 0,
+      link: tags ? tags[0].link : "",
     };
   } else {
     settings = {
@@ -275,12 +196,65 @@ export async function getServerSideProps(context) {
       vip_message: "اشتراك",
     };
   }
-  const user = context.query.unique ? true : false;
+  let user = await userModel.findOne({
+    unique: context.query.unique.replace(/\D/g, ""),
+  });
+  if (user) {
+    let country, city;
+    country = await countryModel
+      .findOne({ _id: user.country })
+      .select({ name: 1 })
+      .lean();
+    city = await cityModel
+      .findOne({ _id: user.city })
+      .select({ name: 1 })
+      .lean();
+
+    tags = tags.map((tag) => tag.name);
+
+    if (user.time.indexOf("PM")) user.time = user.time.replace("PM", "م");
+    if (user.time.indexOf("AM")) user.time = user.time.replace("AM", "ص");
+
+    user = {
+      ...user._doc,
+      country_name: country ? country.name : "",
+      city_name: city ? city.name : "",
+      tags: tags.sort(() => 0.5 - Math.random()).slice(0, 3),
+    };
+  }
+  let viUsers = await userModel
+    .find({ status: 1 })
+    .sort("-_id")
+    .limit(settings.vip)
+    .lean();
+  for (let i = 0; i < viUsers.length; i++) {
+    let country, city;
+    country = await countryModel
+      .findOne({ _id: viUsers[i].country })
+      .select({ name: 1 })
+      .lean();
+    city = await cityModel
+      .findOne({ _id: viUsers[i].city })
+      .select({ name: 1 })
+      .lean();
+    if (viUsers[i].time.indexOf("PM"))
+      viUsers[i].time = viUsers[i].time.replace("PM", "م");
+    if (viUsers[i].time.indexOf("AM"))
+      viUsers[i].time = viUsers[i].time.replace("AM", "ص");
+    viUsers[i] = {
+      ...viUsers[i],
+      country_name: country ? country.name : "",
+      city_name: city ? city.name : "",
+    };
+  }
+  const ads = await adModel.find({ shown: true }).sort("-_id").lean();
+
   return {
     props: {
       settings: JSON.parse(JSON.stringify(settings)),
-      user,
-      queryParams: context.query,
+      user: JSON.parse(JSON.stringify(user)),
+      vipUsers: JSON.parse(JSON.stringify(viUsers)),
+      ads: JSON.parse(JSON.stringify(ads)),
     },
   };
 }

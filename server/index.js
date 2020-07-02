@@ -11,7 +11,7 @@ const mongoose = require("mongoose");
 const config = require("./utils/config");
 const adminRouter = require("./controllers/AdminRouter");
 const userRouter = require("./controllers/UserRouter");
-console.log(process.env.SECRET);
+console.log(process.env.SECRET, "Secret");
 mongoose
   .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
@@ -34,6 +34,7 @@ app.use("/api/admin", adminRouter);
 app.use("/api/user", userRouter);
 
 app.all("*", (req, res) => {
+  console.log(process.env.SECRET, "Secret2");
   return handle(req, res);
 });
 
