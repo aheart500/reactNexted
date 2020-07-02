@@ -208,6 +208,7 @@ userRouter.get("/search/:page/:number", async (req, res) => {
     }
     let users = await userModel
       .find(query)
+      .sort("-_id")
       .skip(numberToskip)
       .limit(number)
       .lean();

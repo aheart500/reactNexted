@@ -3,13 +3,12 @@ import ThemeContext from "../ThemeContext";
 import {
   getNormalUsers,
   getSearchUsers,
-  getSingleUser,
+  getVipUsers,
+  getAds,
 } from "../services/UserServices";
 import tagsModel from "../server/models/tag";
 import userModel from "../server/models/user";
-import countryModel from "../server/models/country";
-import cityModel from "../server/models/city";
-import adModel from "../server/models/ad";
+
 import settingsModel from "../server/models/settings";
 import Footer from "../components/Footer";
 import { Container, Row, Col } from "react-bootstrap";
@@ -20,43 +19,42 @@ import LatestGhost from "../components/LatestGhost";
 import AD from "../components/Ad";
 import Link from "next/link";
 
-function Home({ user, settings, queryParams, vipUsers, ads, normal }) {
-  const [normalUsers, setNormalUsers] = useState(normal);
+function Home({ user, settings, queryParams }) {
+  const [normalUsers, setNormalUsers] = useState([]);
   const [ghostsLoading, setGhostsLoading] = useState(true);
   const [nSearch, setnSearch] = useState(0);
   const [page, setPage] = useState(1);
-  const { theme, changeTheme } = useContext(ThemeContext);
+  const [vipUsers, setVipUsers] = useState([]);
+  const [ads, setAds] = useState([]);
 
+  const { theme, changeTheme } = useContext(ThemeContext);
   useEffect(() => {
-    if (!user) {
-      setGhostsLoading(true);
-      if (queryParams === {}) {
-        getNormalUsers(page, settings.normal_per_page)
-          .then((res) => setNormalUsers(res))
-          .catch((err) => console.log(err))
-          .finally(() => setGhostsLoading(false));
-      } else {
-        if (queryParams.city) {
-          let cityName = queryParams.city;
-          document.title = `${settings.site_name} ${cityName}`;
-        } else if (queryParams.country) {
-          let countryName = queryParams.country;
-          document.title = `${settings.site_name} ${countryName}`;
-        }
-        getSearchUsers(queryParams, page, settings.normal_per_page)
-          .then((res) => {
-            setNormalUsers(res.users);
-            setnSearch(res.nFound);
-          })
-          .catch((err) => console.log(err))
-          .finally(() => setGhostsLoading(false));
-      }
+    getVipUsers(1, settings.vip_per_page)
+      .then((res) => setVipUsers(res))
+      .catch((err) => console.log(err));
+    getAds()
+      .then((res) => setAds(res))
+      .catch((err) => console.log(err));
+  }, []);
+  useEffect(() => {
+    setGhostsLoading(true);
+    if (queryParams === {}) {
+      getNormalUsers(page, settings.normal_per_page)
+        .then((res) => setNormalUsers(res))
+        .catch((err) => console.log(err))
+        .finally(() => setGhostsLoading(false));
     } else {
-      getSingleUser(queryParams.unique)
+      if (queryParams.city) {
+        let cityName = queryParams.city;
+        document.title = `${settings.site_name} ${cityName}`;
+      } else if (queryParams.country) {
+        let countryName = queryParams.country;
+        document.title = `${settings.site_name} ${countryName}`;
+      }
+      getSearchUsers(queryParams, page, settings.normal_per_page)
         .then((res) => {
-          if (res.username) {
-            setNormalUsers([res]);
-          }
+          setNormalUsers(res.users);
+          setnSearch(res.nFound);
         })
         .catch((err) => console.log(err))
         .finally(() => setGhostsLoading(false));
@@ -267,79 +265,11 @@ export async function getServerSideProps(context) {
       vip_message: "اشتراك",
     };
   }
-  const user = context.query.unique ? true : false;
-  let noUsers = await userModel
-    .find({ status: 0 })
-    .sort("-_id")
-    .limit(settings.normal_per_page)
-    .lean();
-  for (let i = 0; i < noUsers.length; i++) {
-    let country, city;
-    country = await countryModel
-      .findOne({ _id: noUsers[i].country })
-      .select({ name: 1 })
-      .lean();
-    city = await cityModel
-      .findOne({ _id: noUsers[i].city })
-      .select({ name: 1 })
-      .lean();
-    if (noUsers[i].time.indexOf("PM"))
-      noUsers[i].time = noUsers[i].time.replace("PM", "م");
-    if (noUsers[i].time.indexOf("AM"))
-      noUsers[i].time = noUsers[i].time.replace("AM", "ص");
-    let tags = await tagsModel.find({}).select({ name: 1 }).lean();
-    tags = tags
-      .map((tag) => tag.name)
-      .sort(() => 0.5 - Math.random())
-      .slice(0, 3);
-    noUsers[i] = {
-      ...noUsers[i],
-      country_name: country ? country.name : "",
-      city_name: city ? city.name : "",
-      tags,
-    };
-  }
 
-  let viUsers = await userModel
-    .find({ status: 1 })
-    .sort("-_id")
-    .limit(settings.vip)
-    .lean();
-  for (let i = 0; i < viUsers.length; i++) {
-    let country, city;
-    country = await countryModel
-      .findOne({ _id: viUsers[i].country })
-      .select({ name: 1 })
-      .lean();
-    city = await cityModel
-      .findOne({ _id: viUsers[i].city })
-      .select({ name: 1 })
-      .lean();
-    if (viUsers[i].time.indexOf("PM"))
-      viUsers[i].time = viUsers[i].time.replace("PM", "م");
-    if (viUsers[i].time.indexOf("AM"))
-      viUsers[i].time = viUsers[i].time.replace("AM", "ص");
-    let tags = await tagsModel.find({}).select({ name: 1 }).lean();
-    tags = tags
-      .map((tag) => tag.name)
-      .sort(() => 0.5 - Math.random())
-      .slice(0, 3);
-    viUsers[i] = {
-      ...viUsers[i],
-      country_name: country ? country.name : "",
-      city_name: city ? city.name : "",
-      tags,
-    };
-  }
-  const ads = await adModel.find({ shown: true }).sort("-_id").lean();
   return {
     props: {
       settings: JSON.parse(JSON.stringify(settings)),
-      user,
       queryParams: context.query,
-      normal: JSON.parse(JSON.stringify(noUsers)),
-      vipUsers: JSON.parse(JSON.stringify(viUsers)),
-      ads: JSON.parse(JSON.stringify(ads)),
     },
   };
 }

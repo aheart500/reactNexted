@@ -3,7 +3,7 @@ import ThemeContext from "../../ThemeContext";
 
 import ThemeButton from "../../components/ThemeButton";
 import Footer from "../../components/Footer";
-
+import { getVipUsers, getAds } from "../../services/UserServices";
 import { Container, Row, Col } from "react-bootstrap";
 import Link from "next/link";
 import PremiumCard from "../../components/PremiumCard";
@@ -15,10 +15,19 @@ import userModel from "../../server/models/user";
 import settingsModel from "../../server/models/settings";
 import countryModel from "../../server/models/country";
 import cityModel from "../../server/models/city";
-import adModel from "../../server/models/ad";
-function Home({ user, settings, vipUsers, ads }) {
+function Home({ user, settings }) {
   const { theme, changeTheme } = useContext(ThemeContext);
+  const [vipUsers, setVipUsers] = useState([]);
+  const [ads, setAds] = useState([]);
 
+  useEffect(() => {
+    getVipUsers(1, settings.vip_per_page)
+      .then((res) => setVipUsers(res))
+      .catch((err) => console.log(err));
+    getAds()
+      .then((res) => setAds(res))
+      .catch((err) => console.log(err));
+  }, []);
   return (
     <div
       className={
@@ -231,39 +240,11 @@ export async function getServerSideProps(context) {
       tags: tags.sort(() => 0.5 - Math.random()).slice(0, 3),
     };
   }
-  let viUsers = await userModel
-    .find({ status: 1 })
-    .sort("-_id")
-    .limit(settings.vip)
-    .lean();
-  for (let i = 0; i < viUsers.length; i++) {
-    let country, city;
-    country = await countryModel
-      .findOne({ _id: viUsers[i].country })
-      .select({ name: 1 })
-      .lean();
-    city = await cityModel
-      .findOne({ _id: viUsers[i].city })
-      .select({ name: 1 })
-      .lean();
-    if (viUsers[i].time.indexOf("PM"))
-      viUsers[i].time = viUsers[i].time.replace("PM", "م");
-    if (viUsers[i].time.indexOf("AM"))
-      viUsers[i].time = viUsers[i].time.replace("AM", "ص");
-    viUsers[i] = {
-      ...viUsers[i],
-      country_name: country ? country.name : "",
-      city_name: city ? city.name : "",
-    };
-  }
-  const ads = await adModel.find({ shown: true }).sort("-_id").lean();
 
   return {
     props: {
       settings: JSON.parse(JSON.stringify(settings)),
       user: JSON.parse(JSON.stringify(user)),
-      vipUsers: JSON.parse(JSON.stringify(viUsers)),
-      ads: JSON.parse(JSON.stringify(ads)),
     },
   };
 }
