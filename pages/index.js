@@ -28,6 +28,7 @@ function Home({ user, settings, queryParams }) {
   const [ads, setAds] = useState([]);
 
   const { theme, changeTheme } = useContext(ThemeContext);
+
   useEffect(() => {
     getVipUsers(1, settings.vip_per_page)
       .then((res) => setVipUsers(res))
@@ -145,21 +146,25 @@ function Home({ user, settings, queryParams }) {
             </div>
 
             <Row className="premium-container">
-              {vipUsers.map((user) => (
-                <PremiumCard
-                  key={user._id}
-                  nameLink={"إضافة"}
-                  Image={
-                    user.img
-                      ? user.img
-                      : "/assets/images/home/profile-image.svg"
-                  }
-                  ImageIcon="/assets/images/home/icons/add.svg"
-                  name={user.name}
-                  username={user.username}
-                  unique={user.unique}
-                />
-              ))}
+              {vipUsers.map((user) => {
+                let arr = user.img ? user.img.split("/") : null;
+
+                return (
+                  <PremiumCard
+                    key={user._id}
+                    nameLink={"إضافة"}
+                    Image={
+                      user.img
+                        ? "/" + arr.slice(arr.length - 2, arr.length).join("/")
+                        : "/assets/images/home/profile-image.svg"
+                    }
+                    ImageIcon="/assets/images/home/icons/add.svg"
+                    name={user.name}
+                    username={user.username}
+                    unique={user.unique}
+                  />
+                );
+              })}
 
               <Col xs={6} md={4} lg={3}>
                 <div className="premium-card text-center">

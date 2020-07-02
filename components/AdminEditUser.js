@@ -3,7 +3,7 @@ import {
   getAllCities,
   getAllCountries,
   getAllMessages,
-  editUser
+  editUser,
 } from "../services/AdminServices";
 
 const AdminEditUser = ({ token, givenData, changeTap, users, setUsers }) => {
@@ -17,27 +17,27 @@ const AdminEditUser = ({ token, givenData, changeTap, users, setUsers }) => {
   const { name, username, ip } = userData;
   useEffect(() => {
     getAllCountries(token)
-      .then(res => setCoutries(res))
-      .catch(err => console.log(err));
+      .then((res) => setCoutries(res))
+      .catch((err) => console.log(err));
     getAllCities(token)
-      .then(res => setCities(res))
-      .catch(err => console.log(err));
+      .then((res) => setCities(res))
+      .catch((err) => console.log(err));
     getAllMessages(token)
-      .then(res => setMessages(res))
-      .catch(err => console.log(err));
+      .then((res) => setMessages(res))
+      .catch((err) => console.log(err));
   }, [token]);
-  const handleInputChange = e => {
+  const handleInputChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
   };
-  const handleImageChange = e => {
+  const handleImageChange = (e) => {
     setUserData({ ...userData, img: e.target.files[0] });
     const reader = new FileReader();
-    reader.onload = e => {
+    reader.onload = (e) => {
       setImageU(e.target.result);
     };
     reader.readAsDataURL(e.target.files[0]);
   };
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (userData.name === "") {
       return setMessage("برجاء إضافة الأسم");
@@ -49,8 +49,8 @@ const AdminEditUser = ({ token, givenData, changeTap, users, setUsers }) => {
 
     form.append("userData", JSON.stringify({ ...userData }));
     editUser(token, userData._id, form)
-      .then(res => {
-        let newUsers = [...users].map(user => {
+      .then((res) => {
+        let newUsers = [...users].map((user) => {
           if (user._id === userData._id) {
             return res;
           } else {
@@ -65,16 +65,17 @@ const AdminEditUser = ({ token, givenData, changeTap, users, setUsers }) => {
           age: 0,
           country: "",
           city: "",
-          message: ""
+          message: "",
         });
         changeTap("emails");
       })
-      .catch(err =>
+      .catch((err) =>
         setMessage(
           "حدثت مشكلة أثناء تعديل المستخدم برجاء التأكد من كل المدخلات وحاول مجدداً"
         )
       );
   };
+  let arr = typeof userData.img === "string" ? userData.img.split("/") : null;
   return (
     <main className="tap">
       <h2>إضافة حساب</h2>
@@ -91,7 +92,11 @@ const AdminEditUser = ({ token, givenData, changeTap, users, setUsers }) => {
                   style={{
                     background: imageU
                       ? `url('${imageU}') center/cover`
-                      : `url('${userData.img}') center/cover`
+                      : arr
+                      ? `url('/${arr
+                          .slice(arr.length - 2, arr.length)
+                          .join("/")}') center/cover`
+                      : `url('${userData.img}') center/cover`,
                   }}
                 ></label>
                 <input
@@ -144,7 +149,7 @@ const AdminEditUser = ({ token, givenData, changeTap, users, setUsers }) => {
                 onChange={handleInputChange}
               >
                 <option value="">اختر دولة</option>
-                {countries.map(country => {
+                {countries.map((country) => {
                   return (
                     <option key={country._id} value={country._id}>
                       {country.name}
@@ -163,8 +168,8 @@ const AdminEditUser = ({ token, givenData, changeTap, users, setUsers }) => {
               >
                 <option value="">اختر المدينة</option>
                 {cities
-                  .filter(city => city.country_id === userData.country)
-                  .map(city => {
+                  .filter((city) => city.country_id === userData.country)
+                  .map((city) => {
                     return (
                       <option key={city._id} value={city._id}>
                         {city.name}
