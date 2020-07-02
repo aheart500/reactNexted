@@ -69,7 +69,13 @@ function Subscription({ message }) {
           {/* End Header */}
 
           {/* Start Body */}
-          <section className="subscription-body text-center">
+          <section
+            className="subscription-body text-center"
+            style={{
+              backgroundColor:
+                theme.themeName === "dark" ? "#545454" : "initial",
+            }}
+          >
             <Container>
               <div className="subscription-form">
                 <div dangerouslySetInnerHTML={{ __html: message }}></div>
@@ -83,7 +89,7 @@ function Subscription({ message }) {
     </>
   );
 }
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const message = await SettingModel.findOne({})
     .select({ vip_message: 1 })
     .lean();
