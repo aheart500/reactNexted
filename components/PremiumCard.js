@@ -11,10 +11,7 @@ const PremiumCard = React.memo((props) => {
             <img src={props.Image} alt="Profile" />
           </div>
           <Link href={`/user/نشر-سناب-${props.unique}-سنابيسو`}>
-            <a
-              className="user-link"
-              onClick={() => window.scrollTo({ top: 0 })}
-            >
+            <a className="user-link">
               <h3>{props.name}</h3>
             </a>
           </Link>

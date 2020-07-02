@@ -31,10 +31,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use("/images/", express.static("app/public/images"));
 app.use("/images/", express.static("../public/images"));
-
 app.use("/images/", express.static("public/images"));
 app.use("/images/", express.static("images"));
-
 app.use("/api/admin", adminRouter);
 app.use("/api/user", userRouter);
 

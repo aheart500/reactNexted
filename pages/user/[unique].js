@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import ThemeContext from "../../ThemeContext";
-
 import ThemeButton from "../../components/ThemeButton";
 import Footer from "../../components/Footer";
-import { getVipUsers, getAds } from "../../services/UserServices";
+import { getVipUsers, getAds, getSettings } from "../../services/UserServices";
 import { Container, Row, Col } from "react-bootstrap";
 import Link from "next/link";
 import PremiumCard from "../../components/PremiumCard";
@@ -12,18 +11,21 @@ import LatestGhost from "../../components/LatestGhost";
 import AD from "../../components/Ad";
 import tagsModel from "../../server/models/tag";
 import userModel from "../../server/models/user";
-import settingsModel from "../../server/models/settings";
 import countryModel from "../../server/models/country";
 import cityModel from "../../server/models/city";
-function Home({ user, settings }) {
+function Home({ user }) {
   const { theme, changeTheme } = useContext(ThemeContext);
   const [vipUsers, setVipUsers] = useState([]);
   const [ads, setAds] = useState([]);
-
+  const [settings, setSettings] = useState({ link: "" });
   useEffect(() => {
-    getVipUsers(1, settings.vip_per_page)
-      .then((res) => setVipUsers(res))
+    getSettings()
+      .then((res) => {
+        setSettings(res);
+        getVipUsers(1, res.vip_per_page).then((u) => setVipUsers(u));
+      })
       .catch((err) => console.log(err));
+
     getAds()
       .then((res) => setAds(res))
       .catch((err) => console.log(err));
@@ -201,23 +203,8 @@ function Home({ user, settings }) {
 }
 
 export async function getServerSideProps(context) {
-  let settings = await settingsModel.findOne({}).lean();
   let tags = await tagsModel.find({}).lean();
 
-  if (settings) {
-    settings = {
-      ...settings,
-      link: tags.length > 1 ? tags[0].link : "",
-    };
-  } else {
-    settings = {
-      site_name: "",
-      site_description: "",
-      vip_per_page: 3,
-      normal_per_page: 5,
-      vip_message: "اشتراك",
-    };
-  }
   let user = await userModel.findOne({
     unique: context.query.unique.replace(/\D/g, ""),
   });
@@ -247,7 +234,6 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
-      settings: JSON.parse(JSON.stringify(settings)),
       user: JSON.parse(JSON.stringify(user)),
     },
   };
