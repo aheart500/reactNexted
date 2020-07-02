@@ -1,7 +1,20 @@
 {
-  "name": "Snappeso",
-  "short_name": "Snappeso PWA",
-  "theme_color": "#FFFFFF",
-  "background_color": "#FFFFFF",
-  "start_url": "/"
+  "short_name": "Snappeso",
+  "name": "Snappeso Web App",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff",
+  "icons": [
+    {
+      "src": "logotype.svg",
+      "type": "image/svg+xml",
+      "sizes": "192x192"
+    },
+    {
+      "src": "logotype.svg",
+      "type": "image/svg+xml",
+      "sizes": "512x512"
+    }
+  ]
 }
