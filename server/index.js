@@ -28,6 +28,18 @@ mongoose
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use("/manifest.json", express.static("app/public/"));
+app.use("/manifest.json", express.static("../public/"));
+app.use("/manifest.json", express.static("public"));
+
+app.use("/robots.txt", express.static("app/public/"));
+app.use("/robots.txt", express.static("../public/"));
+app.use("/robots.txt", express.static("public"));
+
+app.use("/sitmap.xml", express.static("app/public/"));
+app.use("/sitmap.xml", express.static("../public/"));
+app.use("/sitmap.xml", express.static("public"));
+
 app.use("/images/", express.static("app/public/images"));
 app.use("/images/", express.static("../public/images"));
 app.use("/images/", express.static("public/images"));
