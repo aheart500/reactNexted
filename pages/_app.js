@@ -11,10 +11,6 @@ const _app = ({ Component, pageProps }) => {
   return (
     <>
       <Head>
-        <meta
-          name="description"
-          content="تعارف سناب شات اضافات سنابيسو لزيادة مشاهدات سناب شات"
-        />
         <link rel="manifest" href="/manifest.json" />
 
         <link rel="shortcut icon" href="/logotype.svg" />
@@ -23,8 +19,6 @@ const _app = ({ Component, pageProps }) => {
           content="YuD3YwsOTJk9v9zC9HGz3UMPy5xt8VNrCDxPznahAZY"
         />
         <meta name="robots" content="index,follow" />
-
-        <title>نشر سناب اضافات سناب شات - سنابيسو </title>
       </Head>
       <ThemeState>
         <Component {...pageProps} />

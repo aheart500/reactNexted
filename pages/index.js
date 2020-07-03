@@ -6,11 +6,9 @@ import {
   getSearchUsers,
   getVipUsers,
   getAds,
+  getSettings,
 } from "../services/UserServices";
-import tagsModel from "../server/models/tag";
-import userModel from "../server/models/user";
 
-import settingsModel from "../server/models/settings";
 import Footer from "../components/Footer";
 import { Container, Row, Col } from "react-bootstrap";
 import ThemeButton from "../components/ThemeButton";
@@ -20,7 +18,7 @@ import LatestGhost from "../components/LatestGhost";
 import AD from "../components/Ad";
 import Link from "next/link";
 
-function Home({ user, settings, queryParams }) {
+function Home({ queryParams }) {
   const [normalUsers, setNormalUsers] = useState([]);
   const [ghostsLoading, setGhostsLoading] = useState(true);
   const [nSearch, setnSearch] = useState(0);
@@ -29,11 +27,15 @@ function Home({ user, settings, queryParams }) {
   const [ads, setAds] = useState([]);
 
   const { theme, changeTheme } = useContext(ThemeContext);
-
+  const [settings, setSettings] = useState({ link: "" });
   useEffect(() => {
-    getVipUsers(1, settings.vip_per_page)
-      .then((res) => setVipUsers(res))
+    getSettings()
+      .then((res) => {
+        setSettings(res);
+        getVipUsers(1, res.vip_per_page).then((u) => setVipUsers(u));
+      })
       .catch((err) => console.log(err));
+
     getAds()
       .then((res) => setAds(res))
       .catch((err) => console.log(err));
@@ -62,7 +64,7 @@ function Home({ user, settings, queryParams }) {
         .catch((err) => console.log(err))
         .finally(() => setGhostsLoading(false));
     }
-  }, [queryParams, settings, page, user]);
+  }, [queryParams, settings, page]);
   const paginator = () => {
     let l = queryParams !== {} ? nSearch : settings.nUsers;
 
@@ -255,8 +257,6 @@ function Home({ user, settings, queryParams }) {
                   </Row>
                 </Container>
               </section>
-
-              {user ? null : paginator()}
             </>
           )}
           {/* End Ghosts */}
@@ -271,28 +271,8 @@ function Home({ user, settings, queryParams }) {
 export default Home;
 
 export async function getServerSideProps(context) {
-  let settings = await settingsModel.findOne({}).lean();
-  let link = await tagsModel.findOne({}).select({ link: 1 }).lean();
-  let nUsers = await userModel.estimatedDocumentCount();
-  if (settings) {
-    settings = {
-      ...settings,
-      link: link ? link.link : "",
-      nUsers: nUsers ? nUsers : 0,
-    };
-  } else {
-    settings = {
-      site_name: "",
-      site_description: "",
-      vip_per_page: 3,
-      normal_per_page: 5,
-      vip_message: "اشتراك",
-    };
-  }
-
   return {
     props: {
-      settings: JSON.parse(JSON.stringify(settings)),
       queryParams: context.query,
     },
   };
