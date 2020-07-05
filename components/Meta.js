@@ -1,6 +1,9 @@
 import Head from "next/head";
 const Meta = ({ title, desc }) => (
   <Head>
+    <link rel="manifest" href="/manifest.json" />
+
+    <link rel="shortcut icon" href="/logotype.svg" />
     <meta
       name="google-site-verification"
       content="YuD3YwsOTJk9v9zC9HGz3UMPy5xt8VNrCDxPznahAZY"
