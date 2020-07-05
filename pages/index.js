@@ -252,35 +252,54 @@ export default Home;
 
 export async function getServerSideProps({ query }) {
   let queryParams = { ...query };
-  let desc = "تعارف سناب شات اضافات سنابيسو لزيادة مشاهدات سناب شات";
-  let title = "نشر سناب اضافات سناب شات - سنابيسو";
-
+  let desc = "نشر سناب اضافات سناب شات أقوى موقع تعارف سناب شات سنابيسو";
+  let title = " نشر سناب - اضافات سناب - سنابيسو";
+  let keys = [
+    "تعارف سناب",
+    "نشر سناب",
+    "تعارف سناب شات",
+    "دليل السناب",
+    "دليل سناب",
+    "دليل سناب شات",
+    "حسابات سناب شات بنات",
+    "سناب بنات",
+    "سناب بنات فله",
+    "سناب شات بنات",
+    "سناب شات بنات الامارات",
+    "سناب شات بنات جده",
+    "سناب شات بنات سعوديات",
+    "سنابات بنات",
+    "سنابات بنات فله",
+    "تعارف سناب شات ",
+    "سناب مزز",
+    "تعارف سناب",
+  ];
   if (queryParams.city) {
     let cityName = queryParams.city;
 
-    title = "سنابيسو" + " " + cityName;
+    title = "نشر سناب اضافات سناب سنابيسو" + " " + cityName;
+    desc = "نشر سناب اضافات سناب سنابيسو" + " " + cityName;
+    keys = ["نشر سناب", `نشر سناب ${cityName}`];
   } else if (queryParams.country) {
     let countryName = queryParams.country;
 
-    title = "سنابيسو" + " " + countryName;
+    title = "نشر سناب اضافات سناب سنابيسو" + " " + countryName;
+    desc = "نشر سناب اضافات سناب سنابيسو" + " " + countryName;
+    keys = ["نشر سناب", `نشر سناب ${countryName}`];
   }
-  desc += Object.keys(queryParams).map(
-    (name) =>
-      ` ${
-        name === "country"
-          ? "دولة"
-          : name === "city"
-          ? "مدينة"
-          : name === "age"
-          ? "العمر"
-          : "الاسم"
-      } - ${queryParams[name]}`
-  );
+  if (queryParams.age) {
+    desc += " " + queryParams.age;
+  }
+  if (queryParams.name) {
+    desc += " " + queryParams.name;
+  }
+
   return {
     props: {
       queryParams,
       title,
       desc,
+      keys,
     },
   };
 }

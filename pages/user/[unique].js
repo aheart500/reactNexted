@@ -241,7 +241,14 @@ export async function getServerSideProps(context) {
     props: {
       user: JSON.parse(JSON.stringify(user)),
       title: context.query.unique,
-      desc: `${context.query.unique} - تعارف سناب شات اضافات سنابيسو لزيادة مشاهدات سناب شات`,
+      desc: `مرحبا انا ${user.unique} يرجى اضافتي في سناب قم بنشر حسابك `,
+      keys: [
+        "تعارف سناب",
+        "نشر سناب",
+        "تعارف سناب شات",
+        "اضافات سناب ",
+        "اضافات",
+      ],
     },
   };
 }

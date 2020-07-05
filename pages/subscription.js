@@ -82,9 +82,9 @@ export async function getServerSideProps() {
   return {
     props: {
       message: message.vip_message,
-      title: "صفحة اشتراك نشر سناب VIP",
-      desc:
-        "صفحة اشتراك نشر سناب VIP  - تعارف سناب شات اضافات سنابيسو لزيادة مشاهدات سناب شات",
+      title: "نشر سناب VIP زيادة مشاهدات حقيقية مع سنابيسو",
+      desc: "نشر سناب VIP للحصول على مشاهدات واضافات حقيقية مع سنابيسو ",
+      keys: ["نشر سناب VIP", "اضافات VIP", "زيادة مشاهدات سناب"],
     },
   };
 }

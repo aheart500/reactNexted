@@ -1,5 +1,5 @@
 import Head from "next/head";
-const Meta = ({ title, desc }) => (
+const Meta = ({ title, desc, keys }) => (
   <Head>
     <link rel="manifest" href="/manifest.json" />
 
@@ -25,6 +25,7 @@ const Meta = ({ title, desc }) => (
     <link rel="apple-touch-icon" href="/logotype.svg" />
     <meta property="og:image" content="/logotype.svg" />
     <meta name="twitter:image" content="/logotype.svg" />
+    <meta name="keywords" content={keys ? keys.join(", ") : ""} />
   </Head>
 );
 export default Meta;

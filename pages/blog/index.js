@@ -144,9 +144,9 @@ export async function getServerSideProps() {
   return {
     props: {
       blogs: JSON.parse(JSON.stringify(blogs)),
-      title: "مدونة سنابيسو",
-      desc:
-        "مدونة سنابيسو - تعارف سناب شات اضافات سنابيسو لزيادة مشاهدات سناب شات",
+      title: "المقالات",
+      desc: "مقالات تتحدث عن نشر سناب والحصول على اضافات بسنابيسو ",
+      keys: ["المقالات"],
     },
   };
 }

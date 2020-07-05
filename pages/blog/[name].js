@@ -88,7 +88,7 @@ export async function getServerSideProps(context) {
     .replace(/&ndash;/gi, " ")
     .replace(/&quot;/gi, " ")
     .split(" ")
-    .slice(0, 30)
+    .slice(0, 50)
     .join(" ");
   return {
     props: {

@@ -10,7 +10,11 @@ import Meta from "../components/Meta";
 const _app = ({ Component, pageProps }) => {
   return (
     <>
-      <Meta title={pageProps.title} desc={pageProps.desc} />
+      <Meta
+        title={pageProps.title}
+        desc={pageProps.desc}
+        keys={pageProps.keys}
+      />
       <ThemeState>
         <Component {...pageProps} />
       </ThemeState>
