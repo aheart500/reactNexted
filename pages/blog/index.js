@@ -7,6 +7,7 @@ import ThemeContext from "../../ThemeContext";
 import NewsCard from "../../components/NewsCard";
 
 import BlogsModel from "../../server/models/blog";
+import Meta from "../../components/Meta";
 
 function Blog({ blogs }) {
   const [classification, setClassification] = useState("all");
@@ -28,20 +29,12 @@ function Blog({ blogs }) {
 
   return (
     <>
-      <Head>
-        <meta
-          name="description"
-          content="تعارف سناب شات اضافات سنابيسو لزيادة مشاهدات سناب شات مدونة"
-        />
-
-        <meta
-          name="google-site-verification"
-          content="YuD3YwsOTJk9v9zC9HGz3UMPy5xt8VNrCDxPznahAZY"
-        />
-        <meta name="robots" content="index,follow" />
-
-        <title>مدونة سنابيسو</title>
-      </Head>
+      <Meta
+        title="مدونة سنابيسو"
+        desc={
+          " مدونة سنابيسو - تعارف سناب شات اضافات سنابيسو لزيادة مشاهدات سناب شات"
+        }
+      />
       <div
         className={
           theme.themeName === "dark" ? "app-container dark" : "app-container"

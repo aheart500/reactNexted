@@ -4,8 +4,18 @@ import Head from "next/head";
 import { Container } from "react-bootstrap";
 import ThemeContext from "../../ThemeContext";
 import BlogsModel from "../../server/models/blog";
+import Meta from "../../components/Meta";
 
 const SingleBlog = ({ blog }) => {
+  let desc = blog.text
+    .replace(/<[^>]*>/gi, "")
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&ndash;/gi, " ")
+    .replace(/&quot;/gi, " ")
+    .split(" ")
+    .slice(0, 30)
+    .join(" ");
+
   const { theme } = useContext(ThemeContext);
   const blogSection = () => {
     return (
@@ -38,20 +48,7 @@ const SingleBlog = ({ blog }) => {
 
   return (
     <>
-      <Head>
-        <meta
-          name="description"
-          content={`تعارف سناب شات اضافات سنابيسو لزيادة مشاهدات سناب شات ${blog.title}`}
-        />
-
-        <meta
-          name="google-site-verification"
-          content="YuD3YwsOTJk9v9zC9HGz3UMPy5xt8VNrCDxPznahAZY"
-        />
-        <meta name="robots" content="index,follow" />
-
-        <title>{blog.title}</title>
-      </Head>
+      <Meta title={blog.title} desc={desc} />
       <div
         className={
           theme.themeName === "dark" ? "app-container dark" : "app-container"

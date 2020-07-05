@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import Head from "next/head";
+
 import ThemeContext from "../ThemeContext";
 import {
   getNormalUsers,
@@ -17,6 +17,7 @@ import PersonsFilter from "../components/PersonsFilter";
 import LatestGhost from "../components/LatestGhost";
 import AD from "../components/Ad";
 import Link from "next/link";
+import Meta from "../components/Meta";
 
 function Home({ queryParams }) {
   const [normalUsers, setNormalUsers] = useState([]);
@@ -41,13 +42,34 @@ function Home({ queryParams }) {
       .catch((err) => console.log(err));
   }, []);
   let title = "نشر سناب اضافات سناب شات - سنابيسو";
+  let desc = "تعارف سناب شات اضافات سنابيسو لزيادة مشاهدات سناب شات";
   if (queryParams.city) {
     let cityName = queryParams.city;
-    title = `${settings.site_name} ${cityName}`;
+    if (settings.site_name) {
+      title = `${settings.site_name} ${cityName}`;
+    } else {
+      title = "سنابيسو" + " " + cityName;
+    }
   } else if (queryParams.country) {
     let countryName = queryParams.country;
-    title = `${settings.site_name} ${countryName}`;
+    if (settings.site_name) {
+      title = `${settings.site_name} ${countryName}`;
+    } else {
+      title = "سنابيسو" + " " + countryName;
+    }
   }
+  desc += Object.keys(queryParams).map(
+    (name) =>
+      ` ${
+        name === "country"
+          ? "دولة"
+          : name === "city"
+          ? "مدينة"
+          : name === "age"
+          ? "العمر"
+          : "الاسم"
+      } - ${queryParams[name]}`
+  );
   useEffect(() => {
     setGhostsLoading(true);
     if (queryParams === {}) {
@@ -86,20 +108,7 @@ function Home({ queryParams }) {
   };
   return (
     <>
-      <Head>
-        <meta
-          name="description"
-          content="تعارف سناب شات اضافات سنابيسو لزيادة مشاهدات سناب شات"
-        />
-
-        <meta
-          name="google-site-verification"
-          content="YuD3YwsOTJk9v9zC9HGz3UMPy5xt8VNrCDxPznahAZY"
-        />
-        <meta name="robots" content="index,follow" />
-
-        <title>{title}</title>
-      </Head>
+      <Meta title={title} desc={desc} />
       <div
         className={
           theme.themeName === "dark" ? "app-container dark" : "app-container"

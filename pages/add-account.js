@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import Link from "next/link";
-import Head from "next/head";
 import {
   getAllCities,
   getAllCountries,
@@ -11,6 +10,7 @@ import {
 import ThemeContext from "../ThemeContext";
 import { Container, Row, Col } from "react-bootstrap";
 import Footer from "../components/Footer";
+import Meta from "../components/Meta";
 let numbers = [];
 for (let i = 0; i < 36; i++) {
   numbers.push(15 + i);
@@ -107,20 +107,12 @@ function AddAccount() {
 
   return (
     <>
-      <Head>
-        <meta
-          name="description"
-          content="تعارف سناب شات اضافات سنابيسو لزيادة مشاهدات سناب شات إضافة حساب"
-        />
-
-        <meta
-          name="google-site-verification"
-          content="YuD3YwsOTJk9v9zC9HGz3UMPy5xt8VNrCDxPznahAZY"
-        />
-        <meta name="robots" content="index,follow" />
-
-        <title>إضافة حساب</title>
-      </Head>
+      <Meta
+        title={"إضافة حساب نشر سناب - سنابيسو"}
+        desc={
+          " صفحة إضافة نشر سناب - تعارف سناب شات اضافات سنابيسو لزيادة مشاهدات سناب شات"
+        }
+      />
       <div
         className={
           theme.themeName === "dark" ? "app-container dark" : "app-container"

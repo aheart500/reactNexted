@@ -14,6 +14,7 @@ import tagsModel from "../../server/models/tag";
 import userModel from "../../server/models/user";
 import countryModel from "../../server/models/country";
 import cityModel from "../../server/models/city";
+import Meta from "../../components/Meta";
 function Home({ user, uniqueU }) {
   const { theme, changeTheme } = useContext(ThemeContext);
   const [vipUsers, setVipUsers] = useState([]);
@@ -33,20 +34,10 @@ function Home({ user, uniqueU }) {
   }, []);
   return (
     <>
-      <Head>
-        <meta
-          name="description"
-          content={`تعارف سناب شات اضافات سنابيسو لزيادة مشاهدات سناب شات ${user.name}`}
-        />
-
-        <meta
-          name="google-site-verification"
-          content="YuD3YwsOTJk9v9zC9HGz3UMPy5xt8VNrCDxPznahAZY"
-        />
-        <meta name="robots" content="index,follow" />
-
-        <title>{uniqueU}</title>
-      </Head>
+      <Meta
+        title={uniqueU}
+        desc={`${uniqueU} - تعارف سناب شات اضافات سنابيسو لزيادة مشاهدات سناب شات`}
+      />
       <div
         className={
           theme.themeName === "dark" ? "app-container dark" : "app-container"

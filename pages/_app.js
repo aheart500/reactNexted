@@ -14,11 +14,6 @@ const _app = ({ Component, pageProps }) => {
         <link rel="manifest" href="/manifest.json" />
 
         <link rel="shortcut icon" href="/logotype.svg" />
-        <meta
-          name="google-site-verification"
-          content="YuD3YwsOTJk9v9zC9HGz3UMPy5xt8VNrCDxPznahAZY"
-        />
-        <meta name="robots" content="index,follow" />
       </Head>
       <ThemeState>
         <Component {...pageProps} />

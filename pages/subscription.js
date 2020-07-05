@@ -1,29 +1,22 @@
 import React, { useContext } from "react";
 import Link from "next/link";
-import Head from "next/head";
+
 import SettingModel from "../server/models/settings";
 import { Container, Row, Col } from "react-bootstrap";
 import Footer from "../components/Footer";
 import ThemeContext from "../ThemeContext";
+import Meta from "../components/Meta";
 function Subscription({ message }) {
   const { theme } = useContext(ThemeContext);
 
   return (
     <>
-      <Head>
-        <meta
-          name="description"
-          content="تعارف سناب شات اضافات سنابيسو لزيادة مشاهدات سناب شات الاشتراك"
-        />
-
-        <meta
-          name="google-site-verification"
-          content="YuD3YwsOTJk9v9zC9HGz3UMPy5xt8VNrCDxPznahAZY"
-        />
-        <meta name="robots" content="index,follow" />
-
-        <title>الأشتراك</title>
-      </Head>
+      <Meta
+        title={"صفحة اشتراك نشر سناب VIP"}
+        desc={
+          "صفحة اشتراك نشر سناب VIP  - تعارف سناب شات اضافات سنابيسو لزيادة مشاهدات سناب شات"
+        }
+      />
       <div
         className={
           theme.themeName === "dark" ? "app-container dark" : "app-container"
