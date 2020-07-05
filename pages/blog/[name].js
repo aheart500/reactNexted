@@ -7,15 +7,6 @@ import BlogsModel from "../../server/models/blog";
 import Meta from "../../components/Meta";
 
 const SingleBlog = ({ blog }) => {
-  let desc = blog.text
-    .replace(/<[^>]*>/gi, "")
-    .replace(/&nbsp;/gi, " ")
-    .replace(/&ndash;/gi, " ")
-    .replace(/&quot;/gi, " ")
-    .split(" ")
-    .slice(0, 30)
-    .join(" ");
-
   const { theme } = useContext(ThemeContext);
   const blogSection = () => {
     return (
@@ -48,7 +39,6 @@ const SingleBlog = ({ blog }) => {
 
   return (
     <>
-      <Meta title={blog.title} desc={desc} />
       <div
         className={
           theme.themeName === "dark" ? "app-container dark" : "app-container"
@@ -92,9 +82,19 @@ export async function getServerSideProps(context) {
   const blog = await BlogsModel.findOne({
     title: context.query.name.replace(/_/g, " "),
   }).lean();
+  let desc = blog.text
+    .replace(/<[^>]*>/gi, "")
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&ndash;/gi, " ")
+    .replace(/&quot;/gi, " ")
+    .split(" ")
+    .slice(0, 30)
+    .join(" ");
   return {
     props: {
       blog: JSON.parse(JSON.stringify(blog)),
+      title: context.query.name.replace(/_/g, " "),
+      desc,
     },
   };
 }

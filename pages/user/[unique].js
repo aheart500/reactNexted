@@ -15,7 +15,7 @@ import userModel from "../../server/models/user";
 import countryModel from "../../server/models/country";
 import cityModel from "../../server/models/city";
 import Meta from "../../components/Meta";
-function Home({ user, uniqueU }) {
+function Home({ user }) {
   const { theme, changeTheme } = useContext(ThemeContext);
   const [vipUsers, setVipUsers] = useState([]);
   const [ads, setAds] = useState([]);
@@ -34,10 +34,6 @@ function Home({ user, uniqueU }) {
   }, []);
   return (
     <>
-      <Meta
-        title={uniqueU}
-        desc={`${uniqueU} - تعارف سناب شات اضافات سنابيسو لزيادة مشاهدات سناب شات`}
-      />
       <div
         className={
           theme.themeName === "dark" ? "app-container dark" : "app-container"
@@ -244,7 +240,8 @@ export async function getServerSideProps(context) {
   return {
     props: {
       user: JSON.parse(JSON.stringify(user)),
-      uniqueU: context.query.unique,
+      title: context.query.unique,
+      desc: `${context.query.unique} - تعارف سناب شات اضافات سنابيسو لزيادة مشاهدات سناب شات`,
     },
   };
 }

@@ -6,12 +6,15 @@ import "../styles/pages/admin-login.css";
 import "../styles/pages/admin.css";
 import "../styles/pages/home.css";
 import ThemeState from "../ThemeState";
-
+import Meta from "../components/Meta";
 const _app = ({ Component, pageProps }) => {
   return (
-    <ThemeState>
-      <Component {...pageProps} />
-    </ThemeState>
+    <>
+      <Meta title={pageProps.title} desc={pageProps.desc} />
+      <ThemeState>
+        <Component {...pageProps} />
+      </ThemeState>
+    </>
   );
 };
 

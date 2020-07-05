@@ -5,18 +5,11 @@ import SettingModel from "../server/models/settings";
 import { Container, Row, Col } from "react-bootstrap";
 import Footer from "../components/Footer";
 import ThemeContext from "../ThemeContext";
-import Meta from "../components/Meta";
 function Subscription({ message }) {
   const { theme } = useContext(ThemeContext);
 
   return (
     <>
-      <Meta
-        title={"صفحة اشتراك نشر سناب VIP"}
-        desc={
-          "صفحة اشتراك نشر سناب VIP  - تعارف سناب شات اضافات سنابيسو لزيادة مشاهدات سناب شات"
-        }
-      />
       <div
         className={
           theme.themeName === "dark" ? "app-container dark" : "app-container"
@@ -89,6 +82,9 @@ export async function getServerSideProps() {
   return {
     props: {
       message: message.vip_message,
+      title: "صفحة اشتراك نشر سناب VIP",
+      desc:
+        "صفحة اشتراك نشر سناب VIP  - تعارف سناب شات اضافات سنابيسو لزيادة مشاهدات سناب شات",
     },
   };
 }

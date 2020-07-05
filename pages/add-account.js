@@ -10,7 +10,6 @@ import {
 import ThemeContext from "../ThemeContext";
 import { Container, Row, Col } from "react-bootstrap";
 import Footer from "../components/Footer";
-import Meta from "../components/Meta";
 let numbers = [];
 for (let i = 0; i < 36; i++) {
   numbers.push(15 + i);
@@ -107,12 +106,6 @@ function AddAccount() {
 
   return (
     <>
-      <Meta
-        title={"إضافة حساب نشر سناب - سنابيسو"}
-        desc={
-          " صفحة إضافة نشر سناب - تعارف سناب شات اضافات سنابيسو لزيادة مشاهدات سناب شات"
-        }
-      />
       <div
         className={
           theme.themeName === "dark" ? "app-container dark" : "app-container"
@@ -277,5 +270,13 @@ function AddAccount() {
     </>
   );
 }
-
+export async function getServerSideProps() {
+  return {
+    props: {
+      title: "إضافة حساب نشر سناب - سنابيسو",
+      desc:
+        "صفحة إضافة نشر سناب - تعارف سناب شات اضافات سنابيسو لزيادة مشاهدات سناب شات",
+    },
+  };
+}
 export default AddAccount;

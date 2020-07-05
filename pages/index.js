@@ -41,35 +41,7 @@ function Home({ queryParams }) {
       .then((res) => setAds(res))
       .catch((err) => console.log(err));
   }, []);
-  let title = "نشر سناب اضافات سناب شات - سنابيسو";
-  let desc = "تعارف سناب شات اضافات سنابيسو لزيادة مشاهدات سناب شات";
-  if (queryParams.city) {
-    let cityName = queryParams.city;
-    if (settings.site_name) {
-      title = `${settings.site_name} ${cityName}`;
-    } else {
-      title = "سنابيسو" + " " + cityName;
-    }
-  } else if (queryParams.country) {
-    let countryName = queryParams.country;
-    if (settings.site_name) {
-      title = `${settings.site_name} ${countryName}`;
-    } else {
-      title = "سنابيسو" + " " + countryName;
-    }
-  }
-  desc += Object.keys(queryParams).map(
-    (name) =>
-      ` ${
-        name === "country"
-          ? "دولة"
-          : name === "city"
-          ? "مدينة"
-          : name === "age"
-          ? "العمر"
-          : "الاسم"
-      } - ${queryParams[name]}`
-  );
+
   useEffect(() => {
     setGhostsLoading(true);
     if (queryParams === {}) {
@@ -108,7 +80,6 @@ function Home({ queryParams }) {
   };
   return (
     <>
-      <Meta title={title} desc={desc} />
       <div
         className={
           theme.themeName === "dark" ? "app-container dark" : "app-container"
@@ -279,10 +250,37 @@ function Home({ queryParams }) {
 }
 export default Home;
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps({ query }) {
+  let queryParams = { ...query };
+  let desc = "تعارف سناب شات اضافات سنابيسو لزيادة مشاهدات سناب شات";
+  let title = "نشر سناب اضافات سناب شات - سنابيسو";
+
+  if (queryParams.city) {
+    let cityName = queryParams.city;
+
+    title = "سنابيسو" + " " + cityName;
+  } else if (queryParams.country) {
+    let countryName = queryParams.country;
+
+    title = "سنابيسو" + " " + countryName;
+  }
+  desc += Object.keys(queryParams).map(
+    (name) =>
+      ` ${
+        name === "country"
+          ? "دولة"
+          : name === "city"
+          ? "مدينة"
+          : name === "age"
+          ? "العمر"
+          : "الاسم"
+      } - ${queryParams[name]}`
+  );
   return {
     props: {
-      queryParams: context.query,
+      queryParams,
+      title,
+      desc,
     },
   };
 }

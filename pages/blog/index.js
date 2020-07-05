@@ -7,7 +7,6 @@ import ThemeContext from "../../ThemeContext";
 import NewsCard from "../../components/NewsCard";
 
 import BlogsModel from "../../server/models/blog";
-import Meta from "../../components/Meta";
 
 function Blog({ blogs }) {
   const [classification, setClassification] = useState("all");
@@ -29,12 +28,6 @@ function Blog({ blogs }) {
 
   return (
     <>
-      <Meta
-        title="مدونة سنابيسو"
-        desc={
-          " مدونة سنابيسو - تعارف سناب شات اضافات سنابيسو لزيادة مشاهدات سناب شات"
-        }
-      />
       <div
         className={
           theme.themeName === "dark" ? "app-container dark" : "app-container"
@@ -147,9 +140,13 @@ function Blog({ blogs }) {
 }
 export async function getServerSideProps() {
   const blogs = await BlogsModel.find({}).lean();
+
   return {
     props: {
       blogs: JSON.parse(JSON.stringify(blogs)),
+      title: "مدونة سنابيسو",
+      desc:
+        "مدونة سنابيسو - تعارف سناب شات اضافات سنابيسو لزيادة مشاهدات سناب شات",
     },
   };
 }
